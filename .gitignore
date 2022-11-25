@@ -52,4 +52,8 @@ _deps
 .history
 .ionide
 
+### Custom ignore directories ###
+# Ignore custom directories and paths underneath it
+build/
+
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,cmake,git

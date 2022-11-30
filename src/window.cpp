@@ -9,21 +9,32 @@
 Window::Window()
 {
     // Initialize values by default
-    _screenWidth = SCREEN_WIDTH; 
-    _screenHeight = SCREEN_HEIGHT; 
+    _screenWidth = SCREEN_WIDTH;
+    _screenHeight = SCREEN_HEIGHT;
     _windowName = "Window";
+
+    _window = NULL;
+    _renderer = NULL;
+    _texture = NULL;
+    _surface = NULL;
 }
 
 Window::Window(int screenWidth, int screenHeight, std::string windowName) : _screenWidth(screenWidth), _screenHeight(screenHeight), _windowName(windowName)
 {
+    _window = NULL;
+    _renderer = NULL;
+    _texture = NULL;
+    _surface = NULL;
 }
 
-void Window::Initialize()
+bool Window::Initialize()
 {
-
-    SDL_Init(SDL_INIT_VIDEO);
-
-    SDL_Window *window = SDL_CreateWindow(
+    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+    {
+        Logger::LogLibraryError("Window::Initialize > SDL_Init ", SDL_GetError());
+        return false;
+    }
+    _window = SDL_CreateWindow(
         _windowName.c_str(),
         SDL_WINDOWPOS_UNDEFINED,
         SDL_WINDOWPOS_UNDEFINED,
@@ -31,22 +42,35 @@ void Window::Initialize()
         _screenHeight,
         0);
 
-    _renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    if (_window == NULL)
+    {
+        Logger::LogLibraryError("Window::Initialize > SDL_CreateWindow ", SDL_GetError());
+        return false;
+    }
+
+    _renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+
+    if (_window == NULL)
+    {
+        Logger::LogLibraryError("Window::Initialize > SDL_CreateRenderer ", SDL_GetError());
+        return false;
+    }
+    _currentWindowState = Window_State::WINDOW_RUNNING;
+
+    return true;
 }
 
-void Window::LoadTexture()
+void Window::LoadTexture(std::string path)
 {
-    SDL_Surface *surface = IMG_Load("../resources/ball.png");
-    if (surface)
+    _surface = IMG_Load(path.c_str());
+    if (_surface)
     {
-        _texture = SDL_CreateTextureFromSurface(_renderer, surface);
-        SDL_FreeSurface(surface);
+        _texture = SDL_CreateTextureFromSurface(_renderer, _surface);
     }
 }
 
-void Window::Update()
+void Window::Render()
 {
-    Logger::LogLibraryError("WINDOW", "Update()");
     SDL_SetRenderDrawColor(_renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 
     SDL_RenderClear(_renderer);
@@ -56,11 +80,28 @@ void Window::Update()
     SDL_RenderPresent(_renderer);
 }
 
-void Window::ClearAndQuit()
+void Window::Input()
 {
-    SDL_Quit();
+    SDL_PollEvent(&_eventSDL);
+
+    if (_eventSDL.type == SDL_QUIT)
+        ClearAndQuit();
+    else if (_eventSDL.type == SDL_KEYDOWN)
+    {
+        Logger::LogLibrary("Window::Input ", "SDL_KEYDOWN");
+        /*switch (_eventSDL.key.keysym.sym)
+        {
+        default:
+
+            break;
+        }*/
+    }
 }
 
-Window::~Window()
+void Window::ClearAndQuit()
 {
+    SDL_FreeSurface(_surface);
+    SDL_DestroyWindow(_window);
+    SDL_Quit();
+    _currentWindowState = Window_State::WINDOW_FINISHED;
 }

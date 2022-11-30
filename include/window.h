@@ -2,6 +2,12 @@
 
 #include "SDL2/SDL.h"
 
+enum Window_State
+{
+    WINDOW_RUNNING,
+    WINDOW_FINISHED
+};
+
 class Window
 {
 public:
@@ -9,16 +15,23 @@ public:
     Window(int screenWidth, int screenHeight, std::string windowName);
     ~Window();
 
-    void Initialize();
-    void LoadTexture();
-    void Update();
+    bool Initialize();
+    void LoadTexture(std::string path);
+    void Render();
+    void Input();
     void ClearAndQuit();
+
+    Window_State GetCurrentWindowState() {return _currentWindowState;};
 
 private:
     SDL_Window *_window;
     SDL_Renderer *_renderer;
     SDL_Texture *_texture;
-    SDL_Event eventSDL;
+    SDL_Surface *_surface;
+    SDL_Event _eventSDL;
+
+    // Current window state
+    Window_State _currentWindowState;
 
     // Configurations
     int _screenWidth;

@@ -82,19 +82,26 @@ void Window::Render()
 
 void Window::Input()
 {
+    SDL_Event _eventSDL;
     SDL_PollEvent(&_eventSDL);
 
     if (_eventSDL.type == SDL_QUIT)
         ClearAndQuit();
     else if (_eventSDL.type == SDL_KEYDOWN)
     {
-        Logger::LogLibrary("Window::Input ", "SDL_KEYDOWN");
-        /*switch (_eventSDL.key.keysym.sym)
+        switch (_eventSDL.key.keysym.sym)
         {
-        default:
-
+        case SDLK_UP:
+        case SDLK_w:
+            Logger::LogLibrary("Window::Input ", "SDL_KEYDOWN UP or W ");
             break;
-        }*/
+        case SDLK_DOWN:
+        case SDLK_s:
+            Logger::LogLibrary("Window::Input ", "SDL_KEYDOWN DOWN or s ");
+            break;
+        default:
+            break;
+        }
     }
 }
 

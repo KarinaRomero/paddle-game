@@ -28,7 +28,6 @@ private:
     SDL_Renderer *_renderer;
     SDL_Texture *_texture;
     SDL_Surface *_surface;
-    SDL_Event _eventSDL;
 
     // Current window state
     Window_State _currentWindowState;

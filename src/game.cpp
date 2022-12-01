@@ -15,12 +15,12 @@ Game::~Game()
 void Game::Run()
 {
     if (!_isGameInitialized)
-        Logger::LogLibrary("Game::Run() ", "Game cannot be initialized");
+        Logger::LogLibraryError("Game::Run() ", "Game cannot be initialized");
     else
     {
         std::string path = "../resources/ball.png";
         _window->LoadTexture(path);
-        
+
         while (_window->GetCurrentWindowState() == Window_State::WINDOW_RUNNING)
         {
             _window->Render();

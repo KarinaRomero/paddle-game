@@ -8,10 +8,11 @@ private:
 
 protected:
     Utilities::Vector2D _size = {0, 0};
+    Utilities::Vector2D _velocity = {0, 0};
     Utilities::Vector2D _position = {0, 0};
+    std::string _path;
 
     TextureComponent _textureComponent;
-    std::string _path;
 
 public:
     GameObject();

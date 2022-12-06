@@ -15,8 +15,6 @@ public:
     SDL_Texture *_texture;
 
 private:
-    //SDL_Texture *_texture;
-    // Methods
     SDL_Surface* GenerateSurface(std::string path, SDL_Surface* worldSurface);
 };
 #endif

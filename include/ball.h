@@ -6,9 +6,10 @@ class Ball : public GameObject
 public:
     
     Ball();
+    Ball(std::string path, Utilities::Vector2D position);
     ~Ball();
-    
-    void Update();
+
+    void Update(float time);
     void Clean();
 private:
 };

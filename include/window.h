@@ -1,5 +1,7 @@
-#include <string>
+#ifndef WINDOW_H
+#define WINDOW_H
 
+#include <string>
 #include "SDL2/SDL.h"
 
 enum Window_State
@@ -51,3 +53,5 @@ private:
     // Methods
     SDL_Surface* GenerateSurface(std::string path);
 };
+
+#endif

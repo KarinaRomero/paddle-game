@@ -1,4 +1,4 @@
-#include "game-object.h"
+#include "game_object.h"
 #include "logger.h"
 
 GameObject::GameObject()

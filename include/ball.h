@@ -1,4 +1,7 @@
-#include "game-object.h"
+#ifndef BALL_H
+#define BALL_H
+
+#include "game_object.h"
 #include <string>
 
 class Ball : public GameObject
@@ -13,3 +16,5 @@ public:
     void Clean();
 private:
 };
+
+# endif

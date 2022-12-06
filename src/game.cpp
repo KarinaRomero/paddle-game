@@ -1,19 +1,19 @@
 #include <string>
 #include "logger.h"
-#include "game.h"
+#include "game_controller.h"
 #include "ball.h"
 
-Game::Game()
+GameController::GameController()
 {
     _window = new Window();
     _isGameInitialized = _window->Initialize();
 }
 
-Game::~Game()
+GameController::~GameController()
 {
 }
 
-void Game::Run()
+void GameController::Run()
 {
     float lastUpdate = 0;
 

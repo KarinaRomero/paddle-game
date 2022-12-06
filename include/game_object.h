@@ -1,4 +1,7 @@
-#include "texture-component.h"
+#ifndef GAME_OBJECT_H
+#define GAME_OBJECT_H
+
+#include "texture_component.h"
 #include "utilities.h"
 
 class GameObject
@@ -27,3 +30,5 @@ public:
     void Draw(SDL_Renderer* renderer);
     void Clean();
 };
+
+#endif

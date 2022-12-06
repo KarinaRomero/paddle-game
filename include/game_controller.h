@@ -1,10 +1,13 @@
+#ifndef GAME_CONTROLLER_H
+#define GAME_CONTROLLER_H
+
 #include "window.h"
 
-class Game
+class GameController
 {
 public:
-    Game();
-    ~Game();
+    GameController();
+    ~GameController();
     void Run();
 
 private:
@@ -17,3 +20,5 @@ private:
     void Update();
     void Render();
 };
+
+#endif

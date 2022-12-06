@@ -1,4 +1,4 @@
- #include "texture-component.h"
+ #include "texture_component.h"
 #include "logger.h"
 #include "SDL2/SDL_image.h"
  

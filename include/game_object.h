@@ -19,6 +19,7 @@ protected:
 
 public:
     GameObject();
+    GameObject(std::string path, Utilities::Vector2D position);
     ~GameObject();
     void Initialize(SDL_Renderer *worldRenderer, SDL_Surface *worldSurface);
 

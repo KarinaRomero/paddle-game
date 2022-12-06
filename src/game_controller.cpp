@@ -2,6 +2,7 @@
 #include "logger.h"
 #include "game_controller.h"
 #include "ball.h"
+#include "paddle.h"
 
 GameController::GameController()
 {
@@ -27,6 +28,12 @@ void GameController::Run()
         Ball *ball1 = new Ball("../resources/enemy-ball.png", Utilities::Vector2D{70, 70});
         ball1->Initialize(_window->_renderer, _window->_surface);
 
+        Paddle *paddle = new Paddle("../resources/paddle.png", Utilities::Vector2D{70, 70});
+        paddle->Initialize(_window->_renderer, _window->_surface);
+        
+        Paddle *paddle1 = new Paddle("../resources/paddle1.png", Utilities::Vector2D{270, 70});
+        paddle1->Initialize(_window->_renderer, _window->_surface);
+
         int i = 0;
         while (_window->GetCurrentWindowState() == Window_State::WINDOW_RUNNING)
         {
@@ -45,6 +52,8 @@ void GameController::Run()
             _window->ClearRender();
             ball->Draw(_window->_renderer);
             ball1->Draw(_window->_renderer);
+            paddle->Draw(_window->_renderer);
+            paddle1->Draw(_window->_renderer);
             _window->UpdateRender();
         }
     }

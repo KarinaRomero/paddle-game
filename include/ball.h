@@ -7,7 +7,6 @@
 class Ball : public GameObject
 {
 public:
-    
     Ball();
     Ball(std::string path, Utilities::Vector2D position);
     ~Ball();

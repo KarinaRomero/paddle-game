@@ -6,9 +6,9 @@
 class Paddle : public GameObject
 {
 private:
-    /* data */
 public:
-    Paddle(/* args */);
+    Paddle();
+    Paddle(std::string path, Utilities::Vector2D position);
     ~Paddle();
 };
 

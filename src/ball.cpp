@@ -3,21 +3,13 @@
 
 Ball::Ball()
 {
-    Logger::LogLibraryError("Ball::Ball ", "Ball::Ball Creation");
-    _path = "../resources/ball.png";
-    _size = {45, 45};
-    _position = {50, 50};
-    _velocity = {80, 80};
+    Logger::LogLibraryError("Ball::Ball", "Default");
 }
 
-
-Ball::Ball(std::string path, Utilities::Vector2D position)
+Ball::Ball(std::string path, Utilities::Vector2D position) : GameObject(path, position)
 {
-    Logger::LogLibraryError("Ball::Ball ", path);
-    _path = path;
+    Logger::LogLibraryError("Ball::Ball", "Custom");
     _size = {45, 45};
-    _position = position;
-    _velocity = {280, 280};
 }
 
 Ball::~Ball()

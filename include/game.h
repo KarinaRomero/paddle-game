@@ -9,12 +9,11 @@ public:
 
 private:
     // Variables
-    Window* _window;
+    Window *_window;
     bool _isGameInitialized = false;
 
     // GameLoop
     void ProcessInput();
     void Update();
     void Render();
-
 };

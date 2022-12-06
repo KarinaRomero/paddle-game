@@ -50,11 +50,14 @@ bool Window::Initialize()
 
     _renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
-    if (_window == NULL)
+    if (_renderer == NULL)
     {
         Logger::LogLibraryError("Window::Initialize > SDL_CreateRenderer ", SDL_GetError());
         return false;
     }
+
+    _surface = SDL_GetWindowSurface(_window);
+
     _currentWindowState = Window_State::WINDOW_RUNNING;
 
     return true;
@@ -62,20 +65,49 @@ bool Window::Initialize()
 
 void Window::LoadTexture(std::string path)
 {
-    _surface = IMG_Load(path.c_str());
-    if (_surface)
-    {
-        _texture = SDL_CreateTextureFromSurface(_renderer, _surface);
-    }
+    SDL_Surface *surface = GenerateSurface(path);
+
+    _texture = SDL_CreateTextureFromSurface(_renderer, surface);
+
+    SDL_FreeSurface(surface);
 }
 
-void Window::Render()
+SDL_Surface *Window::GenerateSurface(std::string path)
+{
+    SDL_Surface *optimizedSurface = NULL;
+    SDL_Surface *tempSurface = IMG_Load(path.c_str());
+
+    if (_surface == NULL)
+    {
+        Logger::LogLibraryError("Window::Initialize > GenerateSurface ", SDL_GetError());
+    }
+
+    optimizedSurface = SDL_ConvertSurface(tempSurface, _surface->format, 0);
+
+    if (_surface == NULL)
+    {
+        Logger::LogLibraryError("Window::Initialize > SDL_ConvertSurface ", SDL_GetError());
+    }
+
+    SDL_FreeSurface(tempSurface);
+    return optimizedSurface;
+}
+
+void Window::ClearRender()
 {
     SDL_SetRenderDrawColor(_renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-
     SDL_RenderClear(_renderer);
+}
 
-    SDL_RenderCopy(_renderer, _texture, NULL, NULL);
+/*void Window::Render(SDL_Texture *texture, float x, float y, float w, float h)
+{
+    SDL_FRect rr = {x, y, w, h};
+
+    SDL_RenderCopyF(_renderer, texture, NULL, &rr);
+}*/
+
+void Window::UpdateRender()
+{
 
     SDL_RenderPresent(_renderer);
 }

@@ -3,20 +3,21 @@
 
 Ball::Ball()
 {
-    Logger::LogLibraryError("Ball::Ball", "Default");
+    Logger::LogLibrary("Ball::Ball", "Default");
 }
 
 Ball::Ball(std::string path, Utilities::Vector2D position) : GameObject(path, position)
 {
-    Logger::LogLibraryError("Ball::Ball", "Custom");
+    Logger::LogLibrary("Ball::Ball", "Custom");
     _size = {45, 45};
+    _velocity = {5, 5};
 }
 
 Ball::~Ball()
 {
 }
 
-void Ball::Update(float time)
+void Ball::Update()
 {
     if (_position.x >= 640 || _position.x <= 0)
     {
@@ -27,6 +28,6 @@ void Ball::Update(float time)
         _velocity.y *= -1;
     }
 
-    _position.x += _velocity.x * time;
-    _position.y += _velocity.y * time;
+    _position.x += _velocity.x;
+    _position.y += _velocity.y;
 }

@@ -9,11 +9,11 @@ GameObject::GameObject()
 
 GameObject::GameObject(std::string path, Utilities::Vector2D position)
 {
-    Logger::LogLibraryError("GameObject::GameObject ", path);
+    Logger::LogLibrary("GameObject::GameObject ", path);
     _path = path;
     _size = {0, 0};
     _position = position;
-    _velocity = {280, 280};
+    _velocity = {0, 0};
     _texture = new TextureComponent();
 }
 

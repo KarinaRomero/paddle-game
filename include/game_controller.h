@@ -15,7 +15,8 @@ private:
     Window *_window;
     bool _isGameInitialized = false;
 
-    //const 
+    const int FPS = 60;
+    const int DELAY =  1000 / FPS;
     
     // GameLoop
     void ProcessInput();

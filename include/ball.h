@@ -11,7 +11,7 @@ public:
     Ball(std::string path, Utilities::Vector2D position);
     ~Ball();
 
-    void Update(float time);
+    void Update();
 private:
 };
 

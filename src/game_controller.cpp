@@ -16,8 +16,6 @@ GameController::~GameController()
 
 void GameController::Run()
 {
-    float lastUpdate = 0;
-
     if (!_isGameInitialized)
         Logger::LogLibraryError("Game::Run() ", "Game cannot be initialized");
     else
@@ -30,22 +28,23 @@ void GameController::Run()
 
         Paddle *paddle = new Paddle("../resources/paddle.png", Utilities::Vector2D{70, 70});
         paddle->Initialize(_window->_renderer, _window->_surface);
-        
+
         Paddle *paddle1 = new Paddle("../resources/paddle1.png", Utilities::Vector2D{270, 70});
         paddle1->Initialize(_window->_renderer, _window->_surface);
 
+        Uint32 startTicks = 0;
+        Uint32 endTicks = 0;
+
         while (_window->GetCurrentWindowState() == Window_State::WINDOW_RUNNING)
         {
+            startTicks = SDL_GetTicks();
+
             // Event
             _window->Input();
 
             // Physics
-            Uint32 current = SDL_GetTicks();
-            float time = (current - lastUpdate) / 1000.0f;
-            
-            ball1->Update(time);
-            ball->Update(time);
-            lastUpdate = current;
+            ball1->Update();
+            ball->Update();
 
             // Render
             _window->ClearRender();
@@ -54,8 +53,13 @@ void GameController::Run()
             paddle->Draw(_window->_renderer);
             paddle1->Draw(_window->_renderer);
             _window->UpdateRender();
+
+            endTicks = SDL_GetTicks() - startTicks;
+
+            if (endTicks < DELAY)
+                SDL_Delay((int)(DELAY - endTicks));
         }
-        
+
         ball->Clean();
         ball1->Clean();
         paddle->Clean();

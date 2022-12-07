@@ -1,30 +1,30 @@
- #include "texture_component.h"
+#include "texture_component.h"
 #include "logger.h"
 #include "SDL2/SDL_image.h"
- 
- 
- TextureComponent::TextureComponent()
- {
- }
- 
- TextureComponent::~TextureComponent()
- {
- }
 
-void TextureComponent::LoadTexture(std::string path, SDL_Renderer * worldRenderer, SDL_Surface* worldSurface)
+TextureComponent::TextureComponent()
+{
+    _texture = NULL;
+}
+
+TextureComponent::~TextureComponent()
+{
+}
+
+void TextureComponent::LoadTexture(std::string path, SDL_Renderer *worldRenderer, SDL_Surface *worldSurface)
 {
     //SDL_Surface* surface = GenerateSurface(path, worldSurface);
-    SDL_Surface* surface = IMG_Load(path.c_str());
-    
+    SDL_Surface *surface = IMG_Load(path.c_str());
+
     _texture = SDL_CreateTextureFromSurface(worldRenderer, surface);
 
     SDL_FreeSurface(surface);
 }
 
-SDL_Surface* TextureComponent::GenerateSurface(std::string path, SDL_Surface* worldSurface)
+SDL_Surface *TextureComponent::GenerateSurface(std::string path, SDL_Surface *worldSurface)
 {
-    SDL_Surface* optimizedSurface = NULL;
-    SDL_Surface* tempSurface = IMG_Load(path.c_str());
+    SDL_Surface *optimizedSurface = NULL;
+    SDL_Surface *tempSurface = IMG_Load(path.c_str());
 
     if (worldSurface == NULL)
     {
@@ -40,4 +40,10 @@ SDL_Surface* TextureComponent::GenerateSurface(std::string path, SDL_Surface* wo
 
     SDL_FreeSurface(tempSurface);
     return optimizedSurface;
+}
+
+void TextureComponent::RemoveTexture()
+{
+    if(_texture != NULL)
+        SDL_DestroyTexture(_texture);
 }

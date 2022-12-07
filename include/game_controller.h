@@ -15,6 +15,8 @@ private:
     Window *_window;
     bool _isGameInitialized = false;
 
+    //const 
+    
     // GameLoop
     void ProcessInput();
     void Update();

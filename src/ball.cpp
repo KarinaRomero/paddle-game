@@ -18,11 +18,11 @@ Ball::~Ball()
 
 void Ball::Update(float time)
 {
-    if(_position.x >= 640 ||  _position.x <= 0)
+    if (_position.x >= 640 || _position.x <= 0)
     {
         _velocity.x *= -1;
     }
-    if(_position.y >= 480 || _position.y <= 0)
+    if (_position.y >= 480 || _position.y <= 0)
     {
         _velocity.y *= -1;
     }

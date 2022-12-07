@@ -34,7 +34,6 @@ void GameController::Run()
         Paddle *paddle1 = new Paddle("../resources/paddle1.png", Utilities::Vector2D{270, 70});
         paddle1->Initialize(_window->_renderer, _window->_surface);
 
-        int i = 0;
         while (_window->GetCurrentWindowState() == Window_State::WINDOW_RUNNING)
         {
             // Event
@@ -56,5 +55,12 @@ void GameController::Run()
             paddle1->Draw(_window->_renderer);
             _window->UpdateRender();
         }
+        
+        ball->Clean();
+        ball1->Clean();
+        paddle->Clean();
+        paddle1->Clean();
+
+        _window->ClearAndQuit();
     }
 }

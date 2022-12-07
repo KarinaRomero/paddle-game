@@ -10,6 +10,7 @@ class TextureComponent
 public:
     TextureComponent();
     ~TextureComponent();
+    void RemoveTexture();
 
     void LoadTexture(std::string path, SDL_Renderer * worldRenderer, SDL_Surface* worldSurface);
     SDL_Texture *_texture;

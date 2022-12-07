@@ -12,7 +12,6 @@ public:
     ~Ball();
 
     void Update(float time);
-    void Clean();
 private:
 };
 

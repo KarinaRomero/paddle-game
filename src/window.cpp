@@ -118,7 +118,7 @@ void Window::Input()
     SDL_PollEvent(&_eventSDL);
 
     if (_eventSDL.type == SDL_QUIT)
-        ClearAndQuit();
+        _currentWindowState = Window_State::WINDOW_FINISHED;
     else if (_eventSDL.type == SDL_KEYDOWN)
     {
         switch (_eventSDL.key.keysym.sym)
@@ -142,5 +142,4 @@ void Window::ClearAndQuit()
     SDL_FreeSurface(_surface);
     SDL_DestroyWindow(_window);
     SDL_Quit();
-    _currentWindowState = Window_State::WINDOW_FINISHED;
 }

@@ -3,7 +3,7 @@
 
 GameObject::GameObject()
 {
-    Logger::LogLibraryError("GameObject::GameObject ", "Game Creation");
+    Logger::LogLibrary("GameObject::GameObject ", "Game Creation");
     _texture = new TextureComponent();
 }
 
@@ -11,7 +11,7 @@ GameObject::GameObject(std::string path, Utilities::Vector2D position)
 {
     Logger::LogLibraryError("GameObject::GameObject ", path);
     _path = path;
-    _size = {0,0};
+    _size = {0, 0};
     _position = position;
     _velocity = {280, 280};
     _texture = new TextureComponent();
@@ -31,4 +31,9 @@ void GameObject::Draw(SDL_Renderer *renderer)
     SDL_FRect rr = {_position.x, _position.y, _size.x, _size.y};
 
     SDL_RenderCopyF(renderer, _texture->_texture, NULL, &rr);
+}
+
+void GameObject::Clean()
+{
+    _textureComponent.RemoveTexture();
 }

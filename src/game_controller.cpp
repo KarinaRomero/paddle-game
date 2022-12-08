@@ -26,8 +26,8 @@ void GameController::Run()
         Ball *ball1 = new Ball("../resources/enemy-ball.png", Utilities::Vector2D{70, 70});
         ball1->Initialize(_window->_renderer, _window->_surface);
 
-        Paddle *paddle = new Paddle("../resources/paddle.png", Utilities::Vector2D{70, 70});
-        paddle->Initialize(_window->_renderer, _window->_surface);
+        Paddle *paddlePlayer = new Paddle("../resources/paddle.png", Utilities::Vector2D{70, 70});
+        paddlePlayer->Initialize(_window->_renderer, _window->_surface);
 
         Paddle *paddle1 = new Paddle("../resources/paddle1.png", Utilities::Vector2D{270, 70});
         paddle1->Initialize(_window->_renderer, _window->_surface);
@@ -40,17 +40,20 @@ void GameController::Run()
             startTicks = SDL_GetTicks();
 
             // Event
-            _window->Input();
+            int input = _window->Input();
+            paddlePlayer->SendInput(input);
 
             // Physics
             ball1->Update();
             ball->Update();
+            paddlePlayer->Update();
+            paddle1->Update();
 
             // Render
             _window->ClearRender();
             ball->Draw(_window->_renderer);
             ball1->Draw(_window->_renderer);
-            paddle->Draw(_window->_renderer);
+            paddlePlayer->Draw(_window->_renderer);
             paddle1->Draw(_window->_renderer);
             _window->UpdateRender();
 
@@ -62,7 +65,7 @@ void GameController::Run()
 
         ball->Clean();
         ball1->Clean();
-        paddle->Clean();
+        paddlePlayer->Clean();
         paddle1->Clean();
 
         _window->ClearAndQuit();

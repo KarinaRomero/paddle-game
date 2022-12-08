@@ -10,6 +10,9 @@ public:
     Paddle();
     Paddle(std::string path, Utilities::Vector2D position);
     ~Paddle();
+    
+    void SendInput(int input);
+    void Update();
 };
 
 #endif

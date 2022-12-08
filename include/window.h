@@ -27,7 +27,7 @@ public:
     void ClearRender();
     void UpdateRender();
     //void Render(SDL_Texture* texture, float x, float y, float w, float h);
-    void Input();
+    int Input();
     void ClearAndQuit();
 
     Window_State GetCurrentWindowState() {return _currentWindowState;};

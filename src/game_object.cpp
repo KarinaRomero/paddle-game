@@ -4,7 +4,7 @@
 GameObject::GameObject()
 {
     Logger::LogLibrary("GameObject::GameObject ", "Game Creation");
-    _textureComponent = new TextureComponent();
+    _textureComponent = NULL;
 }
 
 GameObject::GameObject(std::string path, Utilities::Vector2D position)
@@ -17,18 +17,21 @@ GameObject::GameObject(std::string path, Utilities::Vector2D position)
     _textureComponent = new TextureComponent();
 }
 
+
 GameObject::~GameObject()
 {
 }
 
 void GameObject::Initialize(SDL_Renderer *worldRenderer, SDL_Surface *worldSurface)
 {
-    _textureComponent->LoadTexture(_path, worldRenderer, worldSurface);
+    if (_textureComponent != NULL)
+        _textureComponent->LoadTexture(_path, worldRenderer, worldSurface);
 }
 
 void GameObject::Draw(SDL_Renderer *renderer)
 {
-    _textureComponent->Draw(renderer, _position, _size);
+    if (_textureComponent != NULL)
+        _textureComponent->Draw(renderer, _position, _size);
 }
 
 void GameObject::Clean()

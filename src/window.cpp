@@ -109,12 +109,12 @@ int Window::Input()
             case SDLK_UP:
             case SDLK_w:
                 inputValue = -1;
-                //Logger::LogLibrary("Window::Input ", "SDL_KEYDOWN UP or W ");
+                // Logger::LogLibrary("Window::Input ", "SDL_KEYDOWN UP or W ");
                 break;
             case SDLK_DOWN:
             case SDLK_s:
                 inputValue = 1;
-                //Logger::LogLibrary("Window::Input ", "SDL_KEYDOWN DOWN or s ");
+                // Logger::LogLibrary("Window::Input ", "SDL_KEYDOWN DOWN or s ");
                 break;
             default:
                 break;
@@ -127,7 +127,9 @@ int Window::Input()
 void Window::ClearAndQuit()
 {
     SDL_FreeSurface(_surface);
+    SDL_DestroyRenderer(_renderer);
     SDL_DestroyWindow(_window);
+    IMG_Quit();
     SDL_Quit();
 }
 

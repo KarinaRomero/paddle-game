@@ -1,6 +1,9 @@
 #ifndef BALL_H
 #define BALL_H
 
+#ifndef BALL_H_
+#define BALL_H_
+
 #include "game_object.h"
 #include <string>
 
@@ -16,4 +19,4 @@ public:
 private:
 };
 
-# endif
+#endif

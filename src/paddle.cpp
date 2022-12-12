@@ -12,6 +12,9 @@ Paddle::Paddle(std::string path, Utilities::Vector2D position) : GameObject(path
     _size = {35, 95};
     _boxCollision.w = _size.x;
     _boxCollision.h = _size.y;
+    
+    _boxCollision.x = _position.x;
+    _boxCollision.y = _position.y;
 }
 
 Paddle::~Paddle()

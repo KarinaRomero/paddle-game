@@ -1,13 +1,29 @@
 #include <string>
 #include "logger.h"
 #include "game_controller.h"
-#include "ball.h"
-#include "paddle.h"
 
 GameController::GameController()
 {
     _window = new Window();
     _isGameInitialized = _window->Initialize();
+
+    if (_isGameInitialized)
+    {
+        float propWidth = _window->GetScreenWidth() / 3;
+        float propHeight = _window->GetScreenHeight() / 2;
+
+        ballPlayer = new Ball("../resources/ball.png", {propWidth, propHeight});
+        ballPlayer->Initialize(_window->_renderer, _window->_surface);
+
+        ballEnemy = new Ball("../resources/enemy-ball.png", {propWidth * 2, propHeight});
+        ballEnemy->Initialize(_window->_renderer, _window->_surface);
+
+        paddlePlayer = new Paddle("../resources/paddle.png", {10, propHeight});
+        paddlePlayer->Initialize(_window->_renderer, _window->_surface);
+
+        paddleEnemy = new Paddle("../resources/paddle1.png", {static_cast<float>(_window->GetScreenWidth() - 50), propHeight});
+        paddleEnemy->Initialize(_window->_renderer, _window->_surface);
+    }
 }
 
 GameController::~GameController()
@@ -20,18 +36,6 @@ void GameController::Run()
         Logger::LogLibraryError("Game::Run() ", "Game cannot be initialized");
     else
     {
-        Ball *ball = new Ball("../resources/ball.png", Utilities::Vector2D{50, 50});
-        ball->Initialize(_window->_renderer, _window->_surface);
-
-        Ball *ball1 = new Ball("../resources/enemy-ball.png", Utilities::Vector2D{70, 70});
-        ball1->Initialize(_window->_renderer, _window->_surface);
-
-        Paddle *paddlePlayer = new Paddle("../resources/paddle.png", Utilities::Vector2D{70, 70});
-        paddlePlayer->Initialize(_window->_renderer, _window->_surface);
-
-        Paddle *paddle1 = new Paddle("../resources/paddle1.png", Utilities::Vector2D{270, 70});
-        paddle1->Initialize(_window->_renderer, _window->_surface);
-
         Uint32 startTicks = 0;
         Uint32 endTicks = 0;
 
@@ -44,22 +48,27 @@ void GameController::Run()
             paddlePlayer->SendInput(input);
 
             // Physics
-            ball1->Update();
-            ball->Update();
+            ballPlayer->Update();
+            ballEnemy->Update();
             paddlePlayer->Update();
-            paddle1->Update();
+            paddleEnemy->Update();
 
-             if (_window->CheckCollision(ball->GetBoxCollision(), paddlePlayer->GetBoxCollision()))
+            if (_window->CheckCollision(ballPlayer->GetBoxCollision(), paddlePlayer->GetBoxCollision()))
             {
-                ball->SetDirectionX();
+                ballPlayer->SetDirectionX();
+            }
+
+            if (_window->CheckCollision(ballEnemy->GetBoxCollision(), paddleEnemy->GetBoxCollision()))
+            {
+                ballEnemy->SetDirectionX();
             }
 
             // Render
             _window->ClearRender();
-            ball->Draw(_window->_renderer);
-            ball1->Draw(_window->_renderer);
+            ballPlayer->Draw(_window->_renderer);
+            ballEnemy->Draw(_window->_renderer);
             paddlePlayer->Draw(_window->_renderer);
-            paddle1->Draw(_window->_renderer);
+            paddleEnemy->Draw(_window->_renderer);
             _window->UpdateRender();
 
             endTicks = SDL_GetTicks() - startTicks;
@@ -68,10 +77,10 @@ void GameController::Run()
                 SDL_Delay((int)(DELAY - endTicks));
         }
 
-        ball->Clean();
-        ball1->Clean();
+        ballPlayer->Clean();
+        ballEnemy->Clean();
         paddlePlayer->Clean();
-        paddle1->Clean();
+        paddleEnemy->Clean();
 
         _window->ClearAndQuit();
     }

@@ -27,10 +27,11 @@ public:
     void LoadTexture(std::string path);
     void ClearRender();
     void UpdateRender();
-    //void Render(SDL_Texture* texture, float x, float y, float w, float h);
     int Input();
     void ClearAndQuit();
     bool CheckCollision(SDL_Rect objectA, SDL_Rect objectB);
+    int GetScreenWidth() {return _screenWidth;};
+    int GetScreenHeight() {return _screenHeight;};
 
     Window_State GetCurrentWindowState() {return _currentWindowState;};
 

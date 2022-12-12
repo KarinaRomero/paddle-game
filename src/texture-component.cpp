@@ -36,6 +36,12 @@ SDL_Surface *TextureComponent::GenerateSurface(std::string path, SDL_Surface *wo
     return optimizedSurface;
 }
 
+void TextureComponent::Draw(SDL_Renderer* renderer, Utilities::Vector2D position, Utilities::Vector2D size){
+    SDL_FRect rr = {position.x, position.y, size.x, size.y};
+
+    SDL_RenderCopyF(renderer, _texture, NULL, &rr);
+}
+
 void TextureComponent::RemoveTexture()
 {
     if(_texture != NULL)

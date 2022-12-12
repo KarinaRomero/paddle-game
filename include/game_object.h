@@ -7,7 +7,7 @@
 class GameObject
 {
 private:
-    TextureComponent *_texture;
+    TextureComponent *_textureComponent;
 
 protected:
     std::string _path;
@@ -22,7 +22,6 @@ public:
     ~GameObject();
     void Initialize(SDL_Renderer *worldRenderer, SDL_Surface *worldSurface);
 
-    TextureComponent *GetTextureComponent() { return _texture; };
     Utilities::Vector2D GetSize() { return _size; };
     Utilities::Vector2D GetPosition() { return _position; };
     SDL_Rect GetBoxCollision() { return _boxCollision; };

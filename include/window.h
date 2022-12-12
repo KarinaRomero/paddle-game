@@ -14,32 +14,28 @@ enum Window_State
 class Window
 {
 public:
-    SDL_Window *_window;
-    SDL_Renderer *_renderer;
-    SDL_Texture *_texture;
-    SDL_Surface *_surface;
-
     Window();
     Window(int screenWidth, int screenHeight, std::string windowName);
     ~Window();
 
     bool Initialize();
-    void LoadTexture(std::string path);
     void ClearRender();
     void UpdateRender();
     int Input();
     void ClearAndQuit();
     bool CheckCollision(SDL_Rect objectA, SDL_Rect objectB);
-    int GetScreenWidth() {return _screenWidth;};
-    int GetScreenHeight() {return _screenHeight;};
+    int GetScreenWidth() { return _screenWidth; };
+    int GetScreenHeight() { return _screenHeight; };
 
-    Window_State GetCurrentWindowState() {return _currentWindowState;};
+    Window_State GetCurrentWindowState() { return _currentWindowState; };
+    SDL_Window *GetWindow() { return _window; };
+    SDL_Renderer *GetRenderer() { return _renderer; };
+    SDL_Surface *GetSurface(){return _surface;};
 
 private:
-    /*SDL_Window *_window;
+    SDL_Window *_window;
     SDL_Renderer *_renderer;
-    SDL_Texture *_texture;
-    SDL_Surface *_surface;*/
+    SDL_Surface *_surface;
 
     // Current window state
     Window_State _currentWindowState;
@@ -54,7 +50,7 @@ private:
     const int SCREEN_HEIGHT = 480;
 
     // Methods
-    SDL_Surface* GenerateSurface(std::string path);
+    SDL_Surface *GenerateSurface(std::string path);
 };
 
 #endif

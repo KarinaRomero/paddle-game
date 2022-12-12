@@ -16,8 +16,6 @@ protected:
     Utilities::Vector2D _position = {0, 0};
     SDL_Rect _boxCollision = {0, 0, 0, 0};
 
-    TextureComponent _textureComponent;
-
 public:
     GameObject();
     GameObject(std::string path, Utilities::Vector2D position);

@@ -15,7 +15,6 @@ Window::Window()
 
     _window = NULL;
     _renderer = NULL;
-    _texture = NULL;
     _surface = NULL;
 }
 
@@ -23,7 +22,6 @@ Window::Window(int screenWidth, int screenHeight, std::string windowName) : _scr
 {
     _window = NULL;
     _renderer = NULL;
-    _texture = NULL;
     _surface = NULL;
 }
 
@@ -61,15 +59,6 @@ bool Window::Initialize()
     _currentWindowState = Window_State::WINDOW_RUNNING;
 
     return true;
-}
-
-void Window::LoadTexture(std::string path)
-{
-    SDL_Surface *surface = GenerateSurface(path);
-
-    _texture = SDL_CreateTextureFromSurface(_renderer, surface);
-
-    SDL_FreeSurface(surface);
 }
 
 SDL_Surface *Window::GenerateSurface(std::string path)

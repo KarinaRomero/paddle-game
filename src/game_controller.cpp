@@ -13,16 +13,16 @@ GameController::GameController()
         float propHeight = _window->GetScreenHeight() / 2;
 
         ballPlayer = new Ball("../resources/ball.png", {propWidth, propHeight});
-        ballPlayer->Initialize(_window->_renderer, _window->_surface);
+        ballPlayer->Initialize(_window->GetRenderer(), _window->GetSurface());
 
         ballEnemy = new Ball("../resources/enemy-ball.png", {propWidth * 2, propHeight});
-        ballEnemy->Initialize(_window->_renderer, _window->_surface);
+        ballEnemy->Initialize(_window->GetRenderer(), _window->GetSurface());
 
         paddlePlayer = new Paddle("../resources/paddle.png", {10, propHeight});
-        paddlePlayer->Initialize(_window->_renderer, _window->_surface);
+        paddlePlayer->Initialize(_window->GetRenderer(), _window->GetSurface());
 
         paddleEnemy = new Paddle("../resources/paddle1.png", {static_cast<float>(_window->GetScreenWidth() - 50), propHeight});
-        paddleEnemy->Initialize(_window->_renderer, _window->_surface);
+        paddleEnemy->Initialize(_window->GetRenderer(), _window->GetSurface());
     }
 }
 
@@ -65,10 +65,10 @@ void GameController::Run()
 
             // Render
             _window->ClearRender();
-            ballPlayer->Draw(_window->_renderer);
-            ballEnemy->Draw(_window->_renderer);
-            paddlePlayer->Draw(_window->_renderer);
-            paddleEnemy->Draw(_window->_renderer);
+            ballPlayer->Draw(_window->GetRenderer());
+            ballEnemy->Draw(_window->GetRenderer());
+            paddlePlayer->Draw(_window->GetRenderer());
+            paddleEnemy->Draw(_window->GetRenderer());
             _window->UpdateRender();
 
             endTicks = SDL_GetTicks() - startTicks;

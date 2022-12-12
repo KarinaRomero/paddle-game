@@ -35,5 +35,5 @@ void GameObject::Draw(SDL_Renderer *renderer)
 
 void GameObject::Clean()
 {
-    _textureComponent.RemoveTexture();
+    _texture->RemoveTexture();
 }

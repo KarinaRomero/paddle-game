@@ -12,6 +12,7 @@ public:
     ~Ball();
 
     void Update();
+    void SetDirectionX();
 private:
 };
 

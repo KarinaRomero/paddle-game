@@ -49,6 +49,11 @@ void GameController::Run()
             paddlePlayer->Update();
             paddle1->Update();
 
+             if (_window->CheckCollision(ball->GetBoxCollision(), paddlePlayer->GetBoxCollision()))
+            {
+                ball->SetDirectionX();
+            }
+
             // Render
             _window->ClearRender();
             ball->Draw(_window->_renderer);
@@ -56,9 +61,6 @@ void GameController::Run()
             paddlePlayer->Draw(_window->_renderer);
             paddle1->Draw(_window->_renderer);
             _window->UpdateRender();
-
-            if (_window->CheckCollision(ball->GetBoxCollision(), paddlePlayer->GetBoxCollision()))
-                Logger::LogLibrary("Collision Detected ", "ball and paddle");
 
             endTicks = SDL_GetTicks() - startTicks;
 
@@ -73,6 +75,4 @@ void GameController::Run()
 
         _window->ClearAndQuit();
     }
-
-
 }

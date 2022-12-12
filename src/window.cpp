@@ -120,12 +120,12 @@ int Window::Input()
             case SDLK_UP:
             case SDLK_w:
                 inputValue = -1;
-                Logger::LogLibrary("Window::Input ", "SDL_KEYDOWN UP or W ");
+                //Logger::LogLibrary("Window::Input ", "SDL_KEYDOWN UP or W ");
                 break;
             case SDLK_DOWN:
             case SDLK_s:
                 inputValue = 1;
-                Logger::LogLibrary("Window::Input ", "SDL_KEYDOWN DOWN or s ");
+                //Logger::LogLibrary("Window::Input ", "SDL_KEYDOWN DOWN or s ");
                 break;
             default:
                 break;

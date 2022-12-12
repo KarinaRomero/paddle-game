@@ -36,3 +36,9 @@ void Ball::Update()
     _boxCollision.x = _position.x;
     _boxCollision.y = _position.y;
 }
+
+void Ball::SetDirectionX()
+{
+    _velocity.x *= -1;
+    Logger::LogLibrary("Collision Detected ", "ball and paddle");
+}

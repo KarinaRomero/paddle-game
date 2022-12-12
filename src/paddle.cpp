@@ -8,7 +8,7 @@ Paddle::Paddle(/* args */)
 Paddle::Paddle(std::string path, Utilities::Vector2D position) : GameObject(path, position)
 {
     Logger::LogLibrary("Paddle::Paddle", "Custom");
-    _velocity = {5, 5};
+    _velocity = {30, 30};
     _size = {35, 95};
     _boxCollision.w = _size.x;
     _boxCollision.h = _size.y;
@@ -25,7 +25,7 @@ void Paddle::SendInput(int input)
         _position.y += _velocity.y * input;
         _boxCollision.x = _position.x;
         _boxCollision.y = _position.y;
-        Logger::LogLibrary("Paddle::SendInput", "input");
+        //Logger::LogLibrary("Paddle::SendInput", "input");
     }
 }
 

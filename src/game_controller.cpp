@@ -57,6 +57,9 @@ void GameController::Run()
             paddle1->Draw(_window->_renderer);
             _window->UpdateRender();
 
+            if (_window->CheckCollision(ball->GetBoxCollision(), paddlePlayer->GetBoxCollision()))
+                Logger::LogLibrary("Collision Detected ", "ball and paddle");
+
             endTicks = SDL_GetTicks() - startTicks;
 
             if (endTicks < DELAY)
@@ -70,4 +73,6 @@ void GameController::Run()
 
         _window->ClearAndQuit();
     }
+
+
 }

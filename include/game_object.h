@@ -10,10 +10,11 @@ private:
     TextureComponent *_texture;
 
 protected:
+    std::string _path;
     Utilities::Vector2D _size = {0, 0};
     Utilities::Vector2D _velocity = {0, 0};
     Utilities::Vector2D _position = {0, 0};
-    std::string _path;
+    SDL_Rect _boxCollision = {0, 0, 0, 0};
 
     TextureComponent _textureComponent;
 
@@ -26,6 +27,7 @@ public:
     TextureComponent *GetTextureComponent() { return _texture; };
     Utilities::Vector2D GetSize() { return _size; };
     Utilities::Vector2D GetPosition() { return _position; };
+    SDL_Rect GetBoxCollision() { return _boxCollision; };
 
     void Update();
     void Draw(SDL_Renderer* renderer);

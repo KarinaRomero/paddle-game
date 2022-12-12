@@ -3,6 +3,7 @@
 
 #include <string>
 #include "SDL2/SDL.h"
+#include "SDL2/SDL_image.h"
 
 enum Window_State
 {
@@ -29,6 +30,7 @@ public:
     //void Render(SDL_Texture* texture, float x, float y, float w, float h);
     int Input();
     void ClearAndQuit();
+    bool CheckCollision(SDL_Rect objectA, SDL_Rect objectB);
 
     Window_State GetCurrentWindowState() {return _currentWindowState;};
 

@@ -3,8 +3,8 @@
 
 #include "logger.h"
 #include "window.h"
-#include "SDL2/SDL_image.h"
 #include "SDL2/SDL.h"
+#include "SDL2/SDL_image.h"
 
 Window::Window()
 {
@@ -99,16 +99,8 @@ void Window::ClearRender()
     SDL_RenderClear(_renderer);
 }
 
-/*void Window::Render(SDL_Texture *texture, float x, float y, float w, float h)
-{
-    SDL_FRect rr = {x, y, w, h};
-
-    SDL_RenderCopyF(_renderer, texture, NULL, &rr);
-}*/
-
 void Window::UpdateRender()
 {
-
     SDL_RenderPresent(_renderer);
 }
 
@@ -148,4 +140,24 @@ void Window::ClearAndQuit()
     SDL_FreeSurface(_surface);
     SDL_DestroyWindow(_window);
     SDL_Quit();
+}
+
+bool Window::CheckCollision(SDL_Rect objectA, SDL_Rect objectB)
+{
+    int leftA, leftB, rightA, rightB, topA, topB, bottomA, bottomB;
+
+    leftA = objectA.x;
+    rightA = objectA.x + objectA.w;
+    topA = objectA.y;
+    bottomA = objectA.y + objectA.h;
+
+    leftB = objectB.x;
+    rightB = objectB.x + objectB.w;
+    topB = objectB.y;
+    bottomB = objectB.y + objectB.h;
+
+    if (bottomA <= topB || topA >= bottomB || rightA <= leftB || leftA >= rightB)
+        return false;
+
+    return true;
 }

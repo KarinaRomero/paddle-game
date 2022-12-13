@@ -23,7 +23,6 @@ public:
     void UpdateRender();
     int Input();
     void ClearAndQuit();
-    bool CheckCollision(SDL_Rect objectA, SDL_Rect objectB);
     int GetScreenWidth() { return _screenWidth; };
     int GetScreenHeight() { return _screenHeight; };
 

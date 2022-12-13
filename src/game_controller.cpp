@@ -108,20 +108,20 @@ void GameController::SpawnBlocks()
 
 void GameController::CheckCollisions()
 {
-    if (_window->CheckCollision(ballPlayer->GetBoxCollision(), paddlePlayer->GetBoxCollision()))
+    if (Utilities::CheckCollision(ballPlayer->GetBoxCollision(), paddlePlayer->GetBoxCollision()))
     {
         ballPlayer->SetDirectionX();
     }
 
-    if (_window->CheckCollision(ballEnemy->GetBoxCollision(), paddleEnemy->GetBoxCollision()))
+    if (Utilities::CheckCollision(ballEnemy->GetBoxCollision(), paddleEnemy->GetBoxCollision()))
     {
         ballEnemy->SetDirectionX();
     }
 
     for (int i = 0; i < blocks.size(); i++)
     {
-        bool ballBlockPlayer = _window->CheckCollision(blocks[i]->GetBoxCollision(), ballPlayer->GetBoxCollision());
-        bool ballBlockEnemy = _window->CheckCollision(blocks[i]->GetBoxCollision(), ballEnemy->GetBoxCollision());
+        bool ballBlockPlayer = Utilities::CheckCollision(blocks[i]->GetBoxCollision(), ballPlayer->GetBoxCollision());
+        bool ballBlockEnemy = Utilities::CheckCollision(blocks[i]->GetBoxCollision(), ballEnemy->GetBoxCollision());
 
         if (ballBlockPlayer || ballBlockEnemy)
         {

@@ -6,6 +6,7 @@
 #include "ball.h"
 #include "paddle.h"
 #include "block.h"
+#include "utilities.h"
 
 class GameController
 {

@@ -30,14 +30,14 @@ private:
     const int FPS = 60;
     const int DELAY =  1000 / FPS;
     
+    void SpawnBlocks();
+
     // GameLoop
     void ProcessInput();
     void Update();
-    void Render();
-
-    void SpawnBlocks();
     void CheckCollisions();
-
+    void Render();
+    void Clear();
 };
 
 #endif

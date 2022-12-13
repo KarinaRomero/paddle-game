@@ -46,27 +46,15 @@ void GameController::Run()
             startTicks = SDL_GetTicks();
 
             // Event
-            int input = _window->Input();
-            paddlePlayer->SendInput(input);
+            ProcessInput();
 
             // Physics
-            ballPlayer->Update();
-            ballEnemy->Update();
-            paddlePlayer->Update();
-            paddleEnemy->Update();
-
+            Update();
             CheckCollisions();
 
             // Render
             _window->ClearRender();
-            ballPlayer->Draw(_window->GetRenderer());
-            ballEnemy->Draw(_window->GetRenderer());
-            paddlePlayer->Draw(_window->GetRenderer());
-            paddleEnemy->Draw(_window->GetRenderer());
-
-            for (auto block : blocks)
-                block->Draw(_window->GetRenderer());
-
+            Render();
             _window->UpdateRender();
 
             endTicks = SDL_GetTicks() - startTicks;
@@ -74,14 +62,41 @@ void GameController::Run()
             if (endTicks < DELAY)
                 SDL_Delay((int)(DELAY - endTicks));
         }
+        _window->ClearAndQuit();
+    }
+}
 
+void GameController::ProcessInput()
+{
+    int input = _window->Input();
+    paddlePlayer->SendInput(input);
+}
+
+void GameController::Update()
+{
+    ballPlayer->Update();
+    ballEnemy->Update();
+    paddlePlayer->Update();
+    paddleEnemy->Update();
+}
+
+void GameController::Render()
+{
+    ballPlayer->Draw(_window->GetRenderer());
+    ballEnemy->Draw(_window->GetRenderer());
+    paddlePlayer->Draw(_window->GetRenderer());
+    paddleEnemy->Draw(_window->GetRenderer());
+
+    for (auto block : blocks)
+        block->Draw(_window->GetRenderer());
+}
+
+void GameController::Clear()
+{
         ballPlayer->Clean();
         ballEnemy->Clean();
         paddlePlayer->Clean();
         paddleEnemy->Clean();
-
-        _window->ClearAndQuit();
-    }
 }
 
 void GameController::SpawnBlocks()

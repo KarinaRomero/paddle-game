@@ -34,4 +34,5 @@ void Block::DrawRectShape(SDL_Renderer *renderer)
 
 Block::~Block()
 {
+    Logger::LogLibrary("Delete BLOCK ", "-------------------------------------");
 }

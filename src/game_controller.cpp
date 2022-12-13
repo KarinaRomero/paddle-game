@@ -55,15 +55,7 @@ void GameController::Run()
             paddlePlayer->Update();
             paddleEnemy->Update();
 
-            if (_window->CheckCollision(ballPlayer->GetBoxCollision(), paddlePlayer->GetBoxCollision()))
-            {
-                ballPlayer->SetDirectionX();
-            }
-
-            if (_window->CheckCollision(ballEnemy->GetBoxCollision(), paddleEnemy->GetBoxCollision()))
-            {
-                ballEnemy->SetDirectionX();
-            }
+            CheckCollisions();
 
             // Render
             _window->ClearRender();
@@ -105,11 +97,40 @@ void GameController::SpawnBlocks()
         startH = 0;
         for (int col = 1; col <= segmentsH; col++)
         {
-            if((rand() % 100) < 50)
+            if ((rand() % 100) < 50)
                 blocks.emplace_back(new Block({startW, startH}));
             startH += 20;
             Logger::LogLibraryWarning("SPAWN BLOCKS row: ", std::to_string(startW * row) + " col: " + std::to_string(startW * row));
         }
         startW += 15;
+    }
+}
+
+void GameController::CheckCollisions()
+{
+    if (_window->CheckCollision(ballPlayer->GetBoxCollision(), paddlePlayer->GetBoxCollision()))
+    {
+        ballPlayer->SetDirectionX();
+    }
+
+    if (_window->CheckCollision(ballEnemy->GetBoxCollision(), paddleEnemy->GetBoxCollision()))
+    {
+        ballEnemy->SetDirectionX();
+    }
+
+    for (int i = 0; i < blocks.size(); i++)
+    {
+        bool ballBlockPlayer = _window->CheckCollision(blocks[i]->GetBoxCollision(), ballPlayer->GetBoxCollision());
+        bool ballBlockEnemy = _window->CheckCollision(blocks[i]->GetBoxCollision(), ballEnemy->GetBoxCollision());
+
+        if (ballBlockPlayer || ballBlockEnemy)
+        {
+            blocks.erase(blocks.begin() + i);
+
+            if (ballBlockEnemy)
+                ballEnemy->SetDirectionX();
+            if (ballBlockPlayer)
+                ballPlayer->SetDirectionX();
+        }
     }
 }

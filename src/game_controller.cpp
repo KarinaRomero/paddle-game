@@ -23,6 +23,8 @@ GameController::GameController()
 
         paddleEnemy = new Paddle("../resources/paddle1.png", {static_cast<float>(_window->GetScreenWidth() - 50), propHeight});
         paddleEnemy->Initialize(_window->GetRenderer(), _window->GetSurface());
+
+        SpawnBlocks();
     }
 }
 
@@ -69,6 +71,10 @@ void GameController::Run()
             ballEnemy->Draw(_window->GetRenderer());
             paddlePlayer->Draw(_window->GetRenderer());
             paddleEnemy->Draw(_window->GetRenderer());
+
+            for (auto block : blocks)
+                block->Draw(_window->GetRenderer());
+
             _window->UpdateRender();
 
             endTicks = SDL_GetTicks() - startTicks;
@@ -83,5 +89,27 @@ void GameController::Run()
         paddleEnemy->Clean();
 
         _window->ClearAndQuit();
+    }
+}
+
+void GameController::SpawnBlocks()
+{
+    float startW = _window->GetScreenWidth() / 3;
+    float startH = 0;
+
+    float segmentsW = startW / 15;
+    float segmentsH = _window->GetScreenHeight() / 20;
+
+    for (int row = 1; row <= segmentsW; row++)
+    {
+        startH = 0;
+        for (int col = 1; col <= segmentsH; col++)
+        {
+            if((rand() % 100) < 50)
+                blocks.emplace_back(new Block({startW, startH}));
+            startH += 20;
+            Logger::LogLibraryWarning("SPAWN BLOCKS row: ", std::to_string(startW * row) + " col: " + std::to_string(startW * row));
+        }
+        startW += 15;
     }
 }

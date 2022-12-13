@@ -10,7 +10,7 @@ Ball::Ball(std::string path, Utilities::Vector2D position) : GameObject(path, po
 {
     Logger::LogLibrary("Ball::Ball", "Custom");
     _velocity = {5, 5};
-    _size = {45, 45};
+    _size = {35, 35};
     _boxCollision.w = _size.x;
     _boxCollision.h = _size.y;
 }
@@ -40,5 +40,5 @@ void Ball::Update()
 void Ball::SetDirectionX()
 {
     _velocity.x *= -1;
-    Logger::LogLibrary("Collision Detected ", "ball and paddle");
+    //Logger::LogLibrary("Collision Detected ", "ball and paddle");
 }

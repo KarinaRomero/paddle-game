@@ -11,8 +11,12 @@ Ball::Ball(std::string path, Utilities::Vector2D position) : GameObject(path, po
     Logger::LogLibrary("Ball::Ball", "Custom");
     _velocity = {5, 5};
     _size = {35, 35};
+
     _boxCollision.w = _size.x;
     _boxCollision.h = _size.y;
+    
+    _boxCollision.x = _position.x;
+    _boxCollision.y = _position.y;
 }
 
 Ball::~Ball()

@@ -38,6 +38,7 @@ private:
     void CheckCollisions();
     void Render();
     void Clear();
+    int BrainPaddleInputValue();
 };
 
 #endif

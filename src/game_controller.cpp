@@ -70,6 +70,7 @@ void GameController::ProcessInput()
 {
     int input = _window->Input();
     paddlePlayer->SendInput(input);
+    paddleEnemy->SendInput(BrainPaddleInputValue());
 }
 
 void GameController::Update()
@@ -93,10 +94,10 @@ void GameController::Render()
 
 void GameController::Clear()
 {
-        ballPlayer->Clean();
-        ballEnemy->Clean();
-        paddlePlayer->Clean();
-        paddleEnemy->Clean();
+    ballPlayer->Clean();
+    ballEnemy->Clean();
+    paddlePlayer->Clean();
+    paddleEnemy->Clean();
 }
 
 void GameController::SpawnBlocks()
@@ -115,7 +116,7 @@ void GameController::SpawnBlocks()
             if ((rand() % 100) < 50)
                 blocks.emplace_back(new Block({startW, startH}));
             startH += 20;
-            Logger::LogLibraryWarning("SPAWN BLOCKS row: ", std::to_string(startW * row) + " col: " + std::to_string(startW * row));
+            // Logger::LogLibraryWarning("SPAWN BLOCKS row: ", std::to_string(startW * row) + " col: " + std::to_string(startW * row));
         }
         startW += 15;
     }
@@ -148,4 +149,24 @@ void GameController::CheckCollisions()
                 ballPlayer->SetDirectionX();
         }
     }
+}
+
+int GameController::BrainPaddleInputValue()
+{
+    bool moveProbability = (rand() % 100) < 75;
+
+    if (moveProbability)
+        return 0;
+
+    auto pbDistanceX = abs(paddleEnemy->GetBoxCollision().x - ballEnemy->GetBoxCollision().x);
+
+    if (pbDistanceX > 100 || pbDistanceX < 20 || ballEnemy->GetBoxCollision().x > paddleEnemy->GetBoxCollision().x)
+        //|| (ballEnemy->GetBoxCollision().y < ((paddleEnemy->GetBoxCollision().y + paddleEnemy->GetBoxCollision().h)+15)
+        //&& ballEnemy->GetBoxCollision().y > ((paddleEnemy->GetBoxCollision().y - paddleEnemy->GetBoxCollision().h)+15)))
+        return 0;
+    else if (ballEnemy->GetBoxCollision().y > paddleEnemy->GetBoxCollision().y)
+        return 1;
+    else if (ballEnemy->GetBoxCollision().y < paddleEnemy->GetBoxCollision().y)
+        return -1;
+    return 0;
 }

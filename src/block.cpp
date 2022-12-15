@@ -14,10 +14,14 @@ Block::Block(Utilities::Vector2D position) : GameObject()
     _boxCollision.h = _size.y;
     _boxCollision.x = _position.x;
     _boxCollision.y = _position.y;
+
+    _currentColorSelected = Utilities::RandomNumberByRates(rates);
     
-    r = rand() % 255+1;
-    g = rand() % 255+1;
-    b = rand() % 255+1;
+    r = _colors[_currentColorSelected].r;
+    g = _colors[_currentColorSelected].g;
+    b = _colors[_currentColorSelected].b;
+
+    _points = _currentColorSelected + 1 * 100;
 }
 
 void Block::Draw(SDL_Renderer* renderer)
@@ -36,3 +40,4 @@ Block::~Block()
 {
     Logger::LogLibrary("Delete BLOCK ", "-------------------------------------");
 }
+

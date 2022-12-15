@@ -74,7 +74,7 @@ void GameController::ProcessInput()
 {
     int input = _window->Input();
     paddlePlayer->SendInput(input);
-    //paddleEnemy->SendInput(BrainPaddleInputValue());
+    paddleEnemy->SendInput(BrainPaddleInputValue());
 }
 
 void GameController::Update()

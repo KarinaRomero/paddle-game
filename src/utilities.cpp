@@ -25,3 +25,20 @@ double Utilities::Distance(SDL_Rect objectA, SDL_Rect objectB)
 {
     return std::sqrt(std::pow(objectB.x - objectA.x, 2) + std::pow(objectB.y - objectA.y, 2));
 }
+
+int Utilities::RandomNumberByRates(std::vector<int> rates)
+{
+    int randomNumber = rand() % 100;
+    int counter = 0; 
+    int rateAccumulated = 0; 
+
+    for (int rate : rates)
+    {
+        rateAccumulated+=rate;
+        if(randomNumber <= rateAccumulated)
+            return counter;
+        else
+            counter++;
+    }
+    return counter;
+}

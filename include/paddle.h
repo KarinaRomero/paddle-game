@@ -12,9 +12,11 @@ public:
     
     void SendInput(int input);
     void Update();
+    int GetState(){return _currentState;};
     
 private:
     Utilities::Vector2D _moveMinMax;
+    int _currentState = 0;
 };
 
 #endif

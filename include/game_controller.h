@@ -21,19 +21,20 @@ private:
     // Variables
     Window *_window;
     bool _isGameInitialized = false;
-
     Ball *ballPlayer;
     Ball *ballEnemy;
     Paddle *paddlePlayer;
     Paddle *paddleEnemy;
 
+    
     std::vector<Block*> blocks;
-    std::map<std::string, Utilities::Collision_state> _ballPaddleCollisions;
-
+    
     const int FPS = 60;
     const int DELAY =  1000 / FPS;
-    
+
+    // Spawn
     void SpawnBlocks();
+    void SpawnPlayers();
 
     // GameLoop
     void ProcessInput();
@@ -42,9 +43,7 @@ private:
     void Render();
     void Clear();
     int BrainPaddleInputValue();
-    void RegisterCollisions();
     void CheckBounds(Ball* ball);
-    void CheckBallPaddleCollision(Ball* objectA, Paddle* objectB);
 };
 
 #endif

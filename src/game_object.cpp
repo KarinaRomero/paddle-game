@@ -17,11 +17,6 @@ GameObject::GameObject(std::string path, Utilities::Vector2D position)
     _textureComponent = new TextureComponent();
 }
 
-
-GameObject::~GameObject()
-{
-}
-
 void GameObject::Initialize(SDL_Renderer *worldRenderer, SDL_Surface *worldSurface)
 {
     if (_textureComponent != NULL)
@@ -38,6 +33,6 @@ void GameObject::Clean()
 {
     _textureComponent->RemoveTexture();
 }
-void GameObject::CollisionDetected(Utilities::Collision_state collisionState){
+void GameObject::CollisionDetected(GameObject* other){
     
 }

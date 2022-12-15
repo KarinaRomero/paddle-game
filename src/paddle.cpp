@@ -10,7 +10,7 @@ Paddle::Paddle(std::string path, Utilities::Vector2D position, Utilities::Vector
     Logger::LogLibrary("Paddle::Paddle", "Custom");
     _moveMinMax = moveMinMax;
     _velocity = {30, 30};
-    _size = {25, 105};
+    _size = {25, 125};
     _boxCollision.w = _size.x;
     _boxCollision.h = _size.y;
 
@@ -34,6 +34,7 @@ void Paddle::SendInput(int input)
             // Logger::LogLibrary("Paddle::SendInput", "input");
         }
     }
+    _currentState =  input;
 }
 
 void Paddle::Update()

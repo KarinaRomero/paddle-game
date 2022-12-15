@@ -12,10 +12,12 @@ public:
     ~Ball();
 
     void Update();
-    void CollisionDetected(Utilities::Collision_state collisionState);
+    void CollisionDetected(GameObject* other);
 private:
     Utilities::Vector2D _moveLimitsMax;
     Utilities::Vector2D _moveLimitsMin;
+    int _score = 0;
+    int _faults = 0;
 };
 
 #endif

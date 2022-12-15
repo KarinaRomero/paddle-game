@@ -8,27 +8,8 @@ GameController::GameController()
 
     if (_isGameInitialized)
     {
-        float propWidth = _window->GetScreenWidth() / 4;
-        float propHeight = _window->GetScreenHeight() / 2;
-
-        ballPlayer = new Ball("../resources/ball.png", {propWidth, propHeight}, {0, 0}, {propWidth * 3, static_cast<float>(_window->GetScreenHeight())});
-        ballPlayer->Initialize(_window->GetRenderer(), _window->GetSurface());
-        ballPlayer->SetTag("BallPlayer");
-
-        ballEnemy = new Ball("../resources/enemy-ball.png", {propWidth * 3, propHeight}, {propWidth,0}, {static_cast<float>(_window->GetScreenWidth()), static_cast<float>(_window->GetScreenHeight())});
-        ballEnemy->Initialize(_window->GetRenderer(), _window->GetSurface());
-        ballEnemy->SetTag("BallEnemy");
-
-        paddlePlayer = new Paddle("../resources/paddle.png", {10, propHeight}, {0, static_cast<float>(_window->GetScreenHeight())});
-        paddlePlayer->Initialize(_window->GetRenderer(), _window->GetSurface());
-        paddlePlayer->SetTag("Player");
-
-        paddleEnemy = new Paddle("../resources/paddle1.png", {static_cast<float>(_window->GetScreenWidth() - 50), propHeight}, {0, static_cast<float>(_window->GetScreenHeight())});
-        paddleEnemy->Initialize(_window->GetRenderer(), _window->GetSurface());
-        paddleEnemy->SetTag("PaddleEnemy");
-
+        SpawnPlayers();
         SpawnBlocks();
-        RegisterCollisions();
     }
 }
 
@@ -119,8 +100,7 @@ void GameController::SpawnBlocks()
         {
             if ((rand() % 100) < 50)
             {
-                blocks.emplace_back(new Block({startW, startH}));
-                ballPlayer->SetTag("Block" + std::to_string(row) + std::to_string(col));
+                blocks.emplace_back(new Block({startW, startH}, "Block" + std::to_string(row) + std::to_string(col)));
             }
             startH += 20;
             // Logger::LogLibraryWarning("SPAWN BLOCKS row: ", std::to_string(startW * row) + " col: " + std::to_string(startW * row));
@@ -129,25 +109,61 @@ void GameController::SpawnBlocks()
     }
 }
 
+void GameController::SpawnPlayers()
+{
+    float propWidth = _window->GetScreenWidth() / 4;
+    float propHeight = _window->GetScreenHeight() / 2;
+
+    ballPlayer = new Ball("../resources/ball.png", {propWidth, propHeight}, {0, 0}, {propWidth * 3, static_cast<float>(_window->GetScreenHeight())});
+    ballPlayer->Initialize(_window->GetRenderer(), _window->GetSurface());
+    ballPlayer->SetTag("BallPlayer");
+
+    ballEnemy = new Ball("../resources/enemy-ball.png", {propWidth * 3, propHeight}, {propWidth, 0}, {static_cast<float>(_window->GetScreenWidth()), static_cast<float>(_window->GetScreenHeight())});
+    ballEnemy->Initialize(_window->GetRenderer(), _window->GetSurface());
+    ballEnemy->SetTag("BallEnemy");
+
+    paddlePlayer = new Paddle("../resources/paddle.png", {10, propHeight}, {0, static_cast<float>(_window->GetScreenHeight())});
+    paddlePlayer->Initialize(_window->GetRenderer(), _window->GetSurface());
+    paddlePlayer->SetTag("PaddlePlayer");
+
+    paddleEnemy = new Paddle("../resources/paddle1.png", {static_cast<float>(_window->GetScreenWidth() - 50), propHeight}, {0, static_cast<float>(_window->GetScreenHeight())});
+    paddleEnemy->Initialize(_window->GetRenderer(), _window->GetSurface());
+    paddleEnemy->SetTag("PaddleEnemy");
+}
+
 void GameController::CheckCollisions()
 {
-    CheckBallPaddleCollision(ballPlayer, paddlePlayer);
-    CheckBallPaddleCollision(ballEnemy, paddleEnemy);
+    if (Utilities::CheckCollision(ballPlayer->GetBoxCollision(), paddlePlayer->GetBoxCollision()))
+        ballPlayer->CollisionDetected(paddlePlayer);
+
+    if (Utilities::CheckCollision(ballEnemy->GetBoxCollision(), paddleEnemy->GetBoxCollision()))
+        ballEnemy->CollisionDetected(paddleEnemy);
+
+    if (Utilities::CheckCollision(ballPlayer->GetBoxCollision(), ballEnemy->GetBoxCollision()))
+    {
+        ballPlayer->CollisionDetected(ballEnemy);
+        ballEnemy->CollisionDetected(ballPlayer);
+    }
 
     for (int i = 0; i < blocks.size(); i++)
     {
-        bool ballBlockPlayer = Utilities::CheckCollision(blocks[i]->GetBoxCollision(), ballPlayer->GetBoxCollision());
-        bool ballBlockEnemy = Utilities::CheckCollision(blocks[i]->GetBoxCollision(), ballEnemy->GetBoxCollision());
+        bool ballBlockEnemy = false;
+        bool ballBlockPlayer = false;
+        
+        ballBlockPlayer = Utilities::CheckCollision(blocks[i]->GetBoxCollision(), ballPlayer->GetBoxCollision());
+        if(!ballBlockPlayer)
+            ballBlockEnemy = Utilities::CheckCollision(blocks[i]->GetBoxCollision(), ballEnemy->GetBoxCollision());
 
         if (ballBlockPlayer || ballBlockEnemy)
         {
             Logger::LogLibrary("REMOVE ", blocks[i]->GetTag() + " Size: " + std::to_string(blocks.size()));
-            blocks.erase(blocks.begin() + i);
-
+            
             if (ballBlockEnemy)
-                ballEnemy->CollisionDetected(Utilities::Collision_state::ENTER);
+                ballEnemy->CollisionDetected(std::move(blocks[i]));
             if (ballBlockPlayer)
-                ballPlayer->CollisionDetected(Utilities::Collision_state::ENTER);
+                ballPlayer->CollisionDetected(std::move(blocks[i]));
+
+            blocks.erase(blocks.begin() + i);
         }
     }
 }
@@ -168,30 +184,4 @@ int GameController::BrainPaddleInputValue()
     else if (ballEnemy->GetBoxCollision().y < paddleEnemy->GetBoxCollision().y)
         return -1;
     return 0;
-}
-
-void GameController::RegisterCollisions()
-{
-    _ballPaddleCollisions.insert({ballPlayer->GetTag() + paddlePlayer->GetTag(), Utilities::Collision_state::ANY});
-    _ballPaddleCollisions.insert({ballEnemy->GetTag() + paddleEnemy->GetTag(), Utilities::Collision_state::ANY});
-}
-
-void GameController::CheckBallPaddleCollision(Ball *objectA, Paddle *objectB)
-{
-    if (Utilities::CheckCollision(objectA->GetBoxCollision(), objectB->GetBoxCollision()))
-    {
-        if (_ballPaddleCollisions[objectA->GetTag() + objectB->GetTag()] == Utilities::ANY)
-        {
-            _ballPaddleCollisions[objectA->GetTag() + objectB->GetTag()] = Utilities::ENTER;
-        }
-        else if (_ballPaddleCollisions[objectA->GetTag() + objectB->GetTag()] == Utilities::ENTER)
-        {
-            _ballPaddleCollisions[objectA->GetTag() + objectB->GetTag()] = Utilities::STAY;
-        }
-        objectA->CollisionDetected(_ballPaddleCollisions[objectA->GetTag() + objectB->GetTag()]);
-    }
-    else if (_ballPaddleCollisions[objectA->GetTag() + objectB->GetTag()] == Utilities::STAY)
-    {
-        _ballPaddleCollisions[objectA->GetTag() + objectB->GetTag()] = Utilities::ANY;
-    }
 }

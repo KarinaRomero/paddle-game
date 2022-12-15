@@ -19,7 +19,7 @@ private:
     
 public:
     Block(/* args */);
-    Block(Utilities::Vector2D position);
+    Block(Utilities::Vector2D position, std::string tag);
     void Draw(SDL_Renderer* renderer);
     int GetPoints(){return _points;};
     ~Block();

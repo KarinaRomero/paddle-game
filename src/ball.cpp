@@ -1,5 +1,7 @@
 #include "ball.h"
 #include "logger.h"
+#include "block.h"
+#include "paddle.h"
 
 Ball::Ball()
 {
@@ -9,7 +11,7 @@ Ball::Ball()
 Ball::Ball(std::string path, Utilities::Vector2D position, Utilities::Vector2D min, Utilities::Vector2D max) : GameObject(path, position)
 {
     Logger::LogLibrary("Ball::Ball", "Custom");
-    
+
     _moveLimitsMax = max;
     _moveLimitsMin = min;
 
@@ -18,7 +20,7 @@ Ball::Ball(std::string path, Utilities::Vector2D position, Utilities::Vector2D m
 
     _boxCollision.w = _size.x;
     _boxCollision.h = _size.y;
-    
+
     _boxCollision.x = _position.x;
     _boxCollision.y = _position.y;
 }
@@ -32,6 +34,7 @@ void Ball::Update()
     if (_position.x >= _moveLimitsMax.x || _position.x <= _moveLimitsMin.x)
     {
         _velocity.x *= -1;
+        _faults++;
     }
     if (_position.y >= _moveLimitsMax.y || _position.y <= _moveLimitsMin.y)
     {
@@ -45,11 +48,19 @@ void Ball::Update()
     _boxCollision.y = _position.y;
 }
 
-void Ball::CollisionDetected(Utilities::Collision_state collisionState)
+void Ball::CollisionDetected(GameObject *other)
 {
-    if(collisionState == Utilities::Collision_state::ENTER)
+    if (other->GetTag().find("Paddle") != std::string::npos || other->GetTag().find("Block") != std::string::npos || other->GetTag().find("Ball") != std::string::npos)
     {
+        
         _velocity.x *= -1;
-        Logger::LogLibrary("Ball::CollisionDetected " + _tag , std::to_string(Utilities::Collision_state::ENTER));
+
+        if (other->GetTag().find("Block") != std::string::npos)
+        {
+            Block* block = dynamic_cast<Block*>(other);
+            _score+= block->GetPoints();
+            delete block;
+        }
+        //Logger::LogLibrary("Ball::CollisionDetected ME: " + _tag, " Other: " + other->GetTag());
     }
 }

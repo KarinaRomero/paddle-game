@@ -5,9 +5,10 @@ Block::Block(/* args */)
 {
 }
 
-Block::Block(Utilities::Vector2D position) : GameObject()
+Block::Block(Utilities::Vector2D position, std::string tag) : GameObject()
 {
     Logger::LogLibrary("Block::Block ", "SDL Rect Shape by default");
+    _tag = tag;
     _position = position;
     _size = {15,20};
     _boxCollision.w = _size.x;

@@ -20,7 +20,7 @@ protected:
 public:
     GameObject();
     GameObject(std::string path, Utilities::Vector2D position);
-    ~GameObject();
+    virtual ~GameObject() = default;
     void Initialize(SDL_Renderer *worldRenderer, SDL_Surface *worldSurface);
 
     void SetTag(std::string tagValue) { _tag = tagValue; };
@@ -29,7 +29,7 @@ public:
     Utilities::Vector2D GetPosition() { return _position; };
     SDL_Rect GetBoxCollision() { return _boxCollision; };
 
-    void CollisionDetected(Utilities::Collision_state collisionState);
+    void CollisionDetected(GameObject* other);
     void Update();
     void Draw(SDL_Renderer *renderer);
     void Clean();

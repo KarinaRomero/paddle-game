@@ -38,3 +38,6 @@ void GameObject::Clean()
 {
     _textureComponent->RemoveTexture();
 }
+void GameObject::CollisionDetected(Utilities::Collision_state collisionState){
+    
+}

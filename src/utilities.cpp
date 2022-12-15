@@ -25,8 +25,3 @@ double Utilities::Distance(SDL_Rect objectA, SDL_Rect objectB)
 {
     return std::sqrt(std::pow(objectB.x - objectA.x, 2) + std::pow(objectB.y - objectA.y, 2));
 }
-
-SDL_Rect Utilities::PredictPosition(SDL_Rect objectA, SDL_Rect objectB)
-{
-
-}

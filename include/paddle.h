@@ -5,14 +5,16 @@
 
 class Paddle : public GameObject
 {
-private:
 public:
     Paddle();
-    Paddle(std::string path, Utilities::Vector2D position);
+    Paddle(std::string path, Utilities::Vector2D position, Utilities::Vector2D moveMinMax);
     ~Paddle();
     
     void SendInput(int input);
     void Update();
+    
+private:
+    Utilities::Vector2D _moveMinMax;
 };
 
 #endif

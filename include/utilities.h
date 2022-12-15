@@ -5,6 +5,13 @@
 
 namespace Utilities
 {
+    enum Collision_state
+    {
+        ANY,
+        ENTER,
+        STAY
+    };
+
     struct Vector2D
     {
         float x;
@@ -13,7 +20,6 @@ namespace Utilities
 
     bool CheckCollision(SDL_Rect objectA, SDL_Rect objectB);
     double Distance(SDL_Rect objectA, SDL_Rect objectB);
-    SDL_Rect PredictPosition(SDL_Rect objectA, SDL_Rect objectB);
 }
 
 #endif

@@ -2,6 +2,8 @@
 #define GAME_CONTROLLER_H
 
 #include "vector"
+#include <map>
+#include <string>
 #include "window.h"
 #include "ball.h"
 #include "paddle.h"
@@ -26,6 +28,7 @@ private:
     Paddle *paddleEnemy;
 
     std::vector<Block*> blocks;
+    std::map<std::string, Utilities::Collision_state> _ballPaddleCollisions;
 
     const int FPS = 60;
     const int DELAY =  1000 / FPS;
@@ -39,6 +42,9 @@ private:
     void Render();
     void Clear();
     int BrainPaddleInputValue();
+    void RegisterCollisions();
+    void CheckBounds(Ball* ball);
+    void CheckBallPaddleCollision(Ball* objectA, Paddle* objectB);
 };
 
 #endif

@@ -6,6 +6,8 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include "SDL_ttf.h"
+#include "SDL_mixer.h"
+
 
 Window::Window()
 {
@@ -65,6 +67,11 @@ bool Window::Initialize()
     if (TTF_Init() == -1)
     {
         Logger::LogLibraryError("Window::Initialize > Init_TTF", TTF_GetError());
+    }
+
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+    {
+        Logger::LogLibraryError("Window::Initialize > Mix_OpenAudio", Mix_GetError());
     }
 
     _currentWindowState = Window_State::WINDOW_RUNNING;
@@ -140,6 +147,12 @@ void Window::ClearAndQuit()
     SDL_FreeSurface(_surface);
     SDL_DestroyRenderer(_renderer);
     SDL_DestroyWindow(_window);
+    
+    _window = NULL;
+    _renderer = NULL;
+    _surface = NULL;
+    
+	Mix_Quit();
     TTF_Quit();
     IMG_Quit();
     SDL_Quit();

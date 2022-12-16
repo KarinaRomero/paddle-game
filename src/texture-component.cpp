@@ -5,6 +5,7 @@
 TextureComponent::TextureComponent()
 {
     _texture = NULL;
+    _font = NULL;
 }
 
 TextureComponent::~TextureComponent()
@@ -74,4 +75,9 @@ void TextureComponent::RemoveTexture()
 {
     if (_texture != NULL)
         SDL_DestroyTexture(_texture);
+    if(_font != NULL)
+        TTF_CloseFont(_font);
+
+    _texture = NULL;
+    _font = NULL;
 }

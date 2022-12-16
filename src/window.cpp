@@ -140,6 +140,7 @@ void Window::ClearAndQuit()
     SDL_FreeSurface(_surface);
     SDL_DestroyRenderer(_renderer);
     SDL_DestroyWindow(_window);
+    TTF_Quit();
     IMG_Quit();
     SDL_Quit();
 }

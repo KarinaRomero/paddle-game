@@ -65,6 +65,7 @@ void GameController::Update()
     _ballEnemy->Update();
     _paddlePlayer->Update();
     _paddleEnemy->Update();
+    _scoreText = "P1: " + std::to_string(_ballPlayer->GetScore()) + " | P2: " + std::to_string(_ballEnemy->GetScore());
 }
 
 void GameController::Render()

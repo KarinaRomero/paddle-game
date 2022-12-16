@@ -10,7 +10,7 @@ GameController::GameController()
     {
         SpawnPlayers();
         SpawnBlocks();
-        _scoreText = "P1: " + std::to_string(_ballPlayer->GetScore()) + " <- | -> P2: " + std::to_string(_ballEnemy->GetScore());
+        _scoreText = "P1: " + std::to_string(_ballPlayer->GetScore()) + " | P2: " + std::to_string(_ballEnemy->GetScore());
     }
 }
 

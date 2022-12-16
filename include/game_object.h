@@ -22,6 +22,7 @@ public:
     GameObject(std::string path, Utilities::Vector2D position);
     virtual ~GameObject() = default;
     void Initialize(SDL_Renderer *worldRenderer, SDL_Surface *worldSurface);
+    void Initialize(std::string displayText, SDL_Renderer *worldRenderer, SDL_Surface *worldSurface, SDL_Color color);
 
     void SetTag(std::string tagValue) { _tag = tagValue; };
     std::string GetTag(){return _tag;};
@@ -32,6 +33,7 @@ public:
     void CollisionDetected(GameObject* other);
     void Update();
     void Draw(SDL_Renderer *renderer);
+    void Draw(SDL_Renderer *renderer, std::string displayText, SDL_Color color);
     void Clean();
 };
 

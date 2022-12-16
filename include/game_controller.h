@@ -8,6 +8,7 @@
 #include "ball.h"
 #include "paddle.h"
 #include "block.h"
+#include "score.h"
 #include "utilities.h"
 
 class GameController
@@ -21,13 +22,14 @@ private:
     // Variables
     Window *_window;
     bool _isGameInitialized = false;
-    Ball *ballPlayer;
-    Ball *ballEnemy;
-    Paddle *paddlePlayer;
-    Paddle *paddleEnemy;
-
+    Ball *_ballPlayer;
+    Ball *_ballEnemy;
+    Paddle *_paddlePlayer;
+    Paddle *_paddleEnemy;
+    Score* _scoreDisplay;
+    std::string _scoreText = "";
     
-    std::vector<Block*> blocks;
+    std::vector<Block*> _blocks;
     
     const int FPS = 60;
     const int DELAY =  1000 / FPS;

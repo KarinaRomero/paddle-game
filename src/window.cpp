@@ -5,6 +5,7 @@
 #include "window.h"
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
+#include "SDL_ttf.h"
 
 Window::Window()
 {
@@ -55,6 +56,16 @@ bool Window::Initialize()
     }
 
     _surface = SDL_GetWindowSurface(_window);
+
+    if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
+    {
+        Logger::LogLibraryError("Window::Initialize > Init_Image ", IMG_GetError());
+    }
+
+    if (TTF_Init() == -1)
+    {
+        Logger::LogLibraryError("Window::Initialize > Init_TTF", TTF_GetError());
+    }
 
     _currentWindowState = Window_State::WINDOW_RUNNING;
 
@@ -132,4 +143,3 @@ void Window::ClearAndQuit()
     IMG_Quit();
     SDL_Quit();
 }
-

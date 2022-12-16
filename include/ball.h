@@ -13,6 +13,8 @@ public:
 
     void Update();
     void CollisionDetected(GameObject* other);
+    int GetScore(){return _score;};
+    
 private:
     Utilities::Vector2D _moveLimitsMax;
     Utilities::Vector2D _moveLimitsMin;

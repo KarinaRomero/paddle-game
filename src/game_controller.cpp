@@ -56,7 +56,7 @@ void GameController::ProcessInput()
 {
     int input = _window->Input();
     _paddlePlayer->SendInput(input);
-    _paddleEnemy->SendInput(BrainPaddleInputValue());
+    _paddleEnemy->SendInput(Utilities::BrainPaddleInputValue(_paddleEnemy->GetBoxCollision(), _ballEnemy->GetBoxCollision()));
 }
 
 void GameController::Update()
@@ -173,22 +173,4 @@ void GameController::CheckCollisions()
             _blocks.erase(_blocks.begin() + i);
         }
     }
-}
-
-int GameController::BrainPaddleInputValue()
-{
-    bool moveProbability = (rand() % 100) < 75;
-
-    if (moveProbability)
-        return 0;
-
-    auto pbDistanceX = abs(_paddleEnemy->GetBoxCollision().x - _ballEnemy->GetBoxCollision().x);
-
-    if (pbDistanceX > 100 || pbDistanceX < 20 || _ballEnemy->GetBoxCollision().x > _paddleEnemy->GetBoxCollision().x)
-        return 0;
-    else if (_ballEnemy->GetBoxCollision().y > _paddleEnemy->GetBoxCollision().y)
-        return 1;
-    else if (_ballEnemy->GetBoxCollision().y < _paddleEnemy->GetBoxCollision().y)
-        return -1;
-    return 0;
 }

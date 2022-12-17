@@ -44,7 +44,6 @@ private:
     void CheckCollisions();
     void Render();
     void Clear();
-    int BrainPaddleInputValue();
     void CheckBounds(Ball* ball);
 };
 

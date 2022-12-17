@@ -22,6 +22,7 @@ namespace Utilities
     bool CheckCollision(SDL_Rect objectA, SDL_Rect objectB);
     double Distance(SDL_Rect objectA, SDL_Rect objectB);
     int RandomNumberByRates(std::vector<int> rates);
+    int BrainPaddleInputValue(SDL_Rect objectA, SDL_Rect objectB);
 }
 
 #endif

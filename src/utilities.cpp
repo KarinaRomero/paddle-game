@@ -42,3 +42,21 @@ int Utilities::RandomNumberByRates(std::vector<int> rates)
     }
     return counter;
 }
+
+int Utilities::BrainPaddleInputValue(SDL_Rect objectA, SDL_Rect objectB)
+{
+    bool moveProbability = (rand() % 100) < 75;
+
+    if (moveProbability)
+        return 0;
+
+    auto pbDistanceX = abs(objectA.x - objectB.x);
+
+    if (pbDistanceX > 100 || pbDistanceX < 20 || objectB.x > objectA.x)
+        return 0;
+    else if (objectB.y > objectA.y)
+        return 1;
+    else if (objectB.y < objectA.y)
+        return -1;
+    return 0;
+}

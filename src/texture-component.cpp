@@ -61,7 +61,7 @@ void TextureComponent::Draw(SDL_Renderer *renderer, Utilities::Vector2D position
 
 void TextureComponent::SetTextureText(SDL_Renderer *renderer, std::string displayText, SDL_Color color)
 {
-    SDL_Surface *textSurface = TTF_RenderText_Solid(_font, displayText.c_str(), color);
+    SDL_Surface *textSurface = TTF_RenderText_Blended_Wrapped(_font, displayText.c_str(), color, 700);
 
     if (textSurface == NULL)
         Logger::LogLibraryError("Window::LoadTextureFont > TTF_RenderText_Solid ", SDL_GetError());

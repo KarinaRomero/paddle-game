@@ -28,7 +28,9 @@ public:
     void SetTag(std::string tagValue) { _tag = tagValue; };
     std::string GetTag(){return _tag;};
     Utilities::Vector2D GetSize() { return _size; };
+    void SetSize(Utilities::Vector2D size) { _size = size; };
     Utilities::Vector2D GetPosition() { return _position; };
+    void SetPosition(Utilities::Vector2D position) { _position = position; };
     SDL_Rect GetBoxCollision() { return _boxCollision; };
     void ResetPosition(){_position = _initialPosition;};
 

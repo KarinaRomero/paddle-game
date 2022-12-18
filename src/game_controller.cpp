@@ -55,14 +55,14 @@ void GameController::Run()
 void GameController::ProcessInput()
 {
     int input = _window->Input();
-    if(_currentGameState == Game_State::PLAYING)
+    if (_currentGameState == Game_State::PLAYING)
     {
         _paddlePlayer->SendInput(input);
         _paddleEnemy->SendInput(Utilities::BrainPaddleInputValue(_paddleEnemy->GetBoxCollision(), _ballEnemy->GetBoxCollision()));
     }
-    if(_currentGameState != Game_State::PLAYING && input > 0)
+    if (_currentGameState != Game_State::PLAYING && input > 0)
     {
-        if(_currentGameState == Game_State::GAME_OVER)
+        if (_currentGameState == Game_State::GAME_OVER)
             ResetGame();
         _currentGameState = Game_State::PLAYING;
     }
@@ -71,7 +71,7 @@ void GameController::ProcessInput()
 void GameController::Update()
 {
     SetMenuText();
-    if(_currentGameState == Game_State::PLAYING)
+    if (_currentGameState == Game_State::PLAYING)
     {
         _ballPlayer->Update();
         _ballEnemy->Update();
@@ -82,14 +82,18 @@ void GameController::Update()
 
 void GameController::Render()
 {
-    _ballPlayer->Draw(_window->GetRenderer());
-    _ballEnemy->Draw(_window->GetRenderer());
-    _paddlePlayer->Draw(_window->GetRenderer());
-    _paddleEnemy->Draw(_window->GetRenderer());
-    _uiDisplay->Draw(_window->GetRenderer(), _uiDisplay->GetText(), _uiDisplay->GetColor());
+    if (_currentGameState == Game_State::PLAYING)
+    {
+        _ballPlayer->Draw(_window->GetRenderer());
+        _ballEnemy->Draw(_window->GetRenderer());
+        _paddlePlayer->Draw(_window->GetRenderer());
+        _paddleEnemy->Draw(_window->GetRenderer());
 
-    for (auto block : _blocks)
-        block->Draw(_window->GetRenderer());
+        for (auto block : _blocks)
+            block->Draw(_window->GetRenderer());
+    }
+
+    _uiDisplay->Draw(_window->GetRenderer(), _uiDisplay->GetText(), _uiDisplay->GetColor());
 }
 
 void GameController::Clear()
@@ -107,7 +111,7 @@ void GameController::SpawnBlocks()
     float startH = offset;
 
     float segmentsW = startW / 15;
-    float segmentsH = (_window->GetScreenHeight()-offset) / 20;
+    float segmentsH = (_window->GetScreenHeight() - offset) / 20;
 
     for (int row = 1; row <= segmentsW; row++)
     {
@@ -146,7 +150,7 @@ void GameController::SpawnPlayers()
     _paddleEnemy->Initialize(_window->GetRenderer(), _window->GetSurface());
     _paddleEnemy->SetTag("PaddleEnemy");
 
-    _uiDisplay = new UIDisplay("../resources/Acme-Regular.ttf", {propWidth, 0}, {propWidth, 30});
+    _uiDisplay = new UIDisplay("../resources/Acme-Regular.ttf", {propWidth, 0}, {propWidth*2, 45});
     _uiDisplay->Initialize(_uiDisplay->GetText(), _window->GetRenderer(), _window->GetSurface(), _uiDisplay->GetColor());
 }
 
@@ -168,15 +172,15 @@ void GameController::CheckCollisions()
     {
         bool ballBlockEnemy = false;
         bool ballBlockPlayer = false;
-        
+
         ballBlockPlayer = Utilities::CheckCollision(_blocks[i]->GetBoxCollision(), _ballPlayer->GetBoxCollision());
-        if(!ballBlockPlayer)
+        if (!ballBlockPlayer)
             ballBlockEnemy = Utilities::CheckCollision(_blocks[i]->GetBoxCollision(), _ballEnemy->GetBoxCollision());
 
         if (ballBlockPlayer || ballBlockEnemy)
         {
             Logger::LogLibrary("REMOVE ", _blocks[i]->GetTag() + " Size: " + std::to_string(_blocks.size()));
-            
+
             if (ballBlockEnemy)
                 _ballEnemy->CollisionDetected(std::move(_blocks[i]));
             if (ballBlockPlayer)
@@ -185,8 +189,8 @@ void GameController::CheckCollisions()
             _blocks.erase(_blocks.begin() + i);
         }
     }
-    
-    if(_blocks.size() <= 0)
+
+    if (_blocks.size() <= 0)
     {
         _currentGameState = Game_State::GAME_OVER;
     }
@@ -194,19 +198,28 @@ void GameController::CheckCollisions()
 
 void GameController::SetMenuText()
 {
+    float propWidth = _window->GetScreenWidth() / 3;
+    float propHeight = _window->GetScreenHeight() / 6;
+
     switch (_currentGameState)
     {
-        case Game_State::MENU:
-            _uiDisplay->SetText(" Press  S  to start ");
-            break;
-        case Game_State::PLAYING:
-            _uiDisplay->SetText( "P1: " + std::to_string(_ballPlayer->GetScore()) + " | P2: " + std::to_string(_ballEnemy->GetScore()));
-            break;
-        case Game_State::GAME_OVER:
-            _uiDisplay->SetText(" Game Over!! \n Press  S  to start ");
-            break;
-        default:
-            break;
+    case Game_State::MENU:
+        _uiDisplay->SetText(" Press  S  to start ");
+        _uiDisplay->SetSize({propWidth, propHeight});
+        _uiDisplay->SetPosition({propWidth, propHeight});
+        break;
+    case Game_State::PLAYING:
+        _uiDisplay->SetText("P1: " + std::to_string(_ballPlayer->GetScore()) + " | P2: " + std::to_string(_ballEnemy->GetScore()));
+        _uiDisplay->SetSize({propWidth, 30});
+        _uiDisplay->ResetPosition();
+        break;
+    case Game_State::GAME_OVER:
+        _uiDisplay->SetText("Game Over!!\nScore: 5002444 \nBest Score: 5002444\nPress  S  to start ");
+        _uiDisplay->SetSize({propWidth * 2, propHeight*3});
+        _uiDisplay->SetPosition({propWidth/2, propHeight});
+        break;
+    default:
+        break;
     }
 }
 

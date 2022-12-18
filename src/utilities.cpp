@@ -1,5 +1,7 @@
 #include "utilities.h"
 #include <cmath>
+#include <iostream>
+#include <fstream> 
 
 bool Utilities::CheckCollision(SDL_Rect objectA, SDL_Rect objectB)
 {
@@ -29,13 +31,13 @@ double Utilities::Distance(SDL_Rect objectA, SDL_Rect objectB)
 int Utilities::RandomNumberByRates(std::vector<int> rates)
 {
     int randomNumber = rand() % 100;
-    int counter = 0; 
-    int rateAccumulated = 0; 
+    int counter = 0;
+    int rateAccumulated = 0;
 
     for (int rate : rates)
     {
-        rateAccumulated+=rate;
-        if(randomNumber <= rateAccumulated)
+        rateAccumulated += rate;
+        if (randomNumber <= rateAccumulated)
             return counter;
         else
             counter++;
@@ -59,4 +61,24 @@ int Utilities::BrainPaddleInputValue(SDL_Rect objectA, SDL_Rect objectB)
     else if (objectB.y < objectA.y)
         return -1;
     return 0;
+}
+
+int Utilities::ReadBestScore()
+{
+    std::string line;
+    int score = 0;
+    std::ifstream stream(savePath);
+    if (stream.is_open())
+    {
+        std::getline(stream, line);
+        score = std::stoi(line);
+    }
+    return score;
+}
+
+void Utilities::SaveBestScore(int score)
+{
+    std::ofstream SaveFile(savePath);
+    SaveFile << score;
+    SaveFile.close();
 }

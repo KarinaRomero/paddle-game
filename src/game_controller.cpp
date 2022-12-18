@@ -9,6 +9,7 @@ GameController::GameController()
     if (_isGameInitialized)
     {
         _currentGameState = Game_State::MENU;
+        LoadBestScore();
         SpawnPlayers();
         SpawnBlocks();
     }
@@ -193,6 +194,9 @@ void GameController::CheckCollisions()
     if (_blocks.size() <= 0)
     {
         _currentGameState = Game_State::GAME_OVER;
+
+        if(_ballPlayer->GetScore() < _bestScore)
+            Utilities::SaveBestScore(_ballPlayer->GetScore());
     }
 }
 
@@ -214,7 +218,7 @@ void GameController::SetMenuText()
         _uiDisplay->ResetPosition();
         break;
     case Game_State::GAME_OVER:
-        _uiDisplay->SetText("Game Over!!\nScore: 5002444 \nBest Score: 5002444\nPress  S  to start ");
+        _uiDisplay->SetText("\nP2 Score: " + std::to_string(_ballEnemy->GetScore()) + "\nYour Score: "+ std::to_string(_ballPlayer->GetScore()) + " \nYour Best Score:" + std::to_string(_bestScore) +"\nPress  S  to start ");
         _uiDisplay->SetSize({propWidth * 2, propHeight*3});
         _uiDisplay->SetPosition({propWidth/2, propHeight});
         break;
@@ -230,4 +234,10 @@ void GameController::ResetGame()
     _ballEnemy->ResetPosition();
     _paddlePlayer->ResetPosition();
     _paddleEnemy->ResetPosition();
+    LoadBestScore();
+}
+
+void GameController::LoadBestScore()
+{
+    _bestScore = Utilities::ReadBestScore();
 }

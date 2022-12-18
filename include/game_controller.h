@@ -34,6 +34,7 @@ private:
     Paddle *_paddlePlayer;
     Paddle *_paddleEnemy;
     UIDisplay* _uiDisplay;
+    int _bestScore;
 
     Game_State _currentGameState;
     
@@ -47,6 +48,7 @@ private:
     void SpawnPlayers();
     void SetMenuText();
     void ResetGame();
+    void LoadBestScore();
 
     // GameLoop
     void ProcessInput();

@@ -3,6 +3,7 @@
 
 #include "vector"
 #include "SDL2/SDL.h"
+#include "string"
 
 namespace Utilities
 {
@@ -19,10 +20,14 @@ namespace Utilities
         float y;
     };
 
+    const std::string savePath {"../resources/save.txt"};
+
     bool CheckCollision(SDL_Rect objectA, SDL_Rect objectB);
     double Distance(SDL_Rect objectA, SDL_Rect objectB);
     int RandomNumberByRates(std::vector<int> rates);
     int BrainPaddleInputValue(SDL_Rect objectA, SDL_Rect objectB);
+    int ReadBestScore();
+    void SaveBestScore(int score);
 }
 
 #endif

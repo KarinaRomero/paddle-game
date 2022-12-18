@@ -8,8 +8,15 @@
 #include "ball.h"
 #include "paddle.h"
 #include "block.h"
-#include "score.h"
+#include "ui_display.h"
 #include "utilities.h"
+
+enum Game_State 
+{
+    MENU,
+    PLAYING,
+    GAME_OVER
+};
 
 class GameController
 {
@@ -26,8 +33,9 @@ private:
     Ball *_ballEnemy;
     Paddle *_paddlePlayer;
     Paddle *_paddleEnemy;
-    Score* _scoreDisplay;
-    std::string _scoreText = "";
+    UIDisplay* _uiDisplay;
+
+    Game_State _currentGameState;
     
     std::vector<Block*> _blocks;
     
@@ -37,6 +45,8 @@ private:
     // Spawn
     void SpawnBlocks();
     void SpawnPlayers();
+    void SetMenuText();
+    void ResetGame();
 
     // GameLoop
     void ProcessInput();
@@ -45,6 +55,7 @@ private:
     void Render();
     void Clear();
     void CheckBounds(Ball* ball);
+
 };
 
 #endif

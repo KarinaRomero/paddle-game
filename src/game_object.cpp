@@ -13,6 +13,7 @@ GameObject::GameObject(std::string path, Utilities::Vector2D position)
     _path = path;
     _size = {0, 0};
     _position = position;
+    _initialPosition = position;
     _velocity = {0, 0};
     _textureComponent = new TextureComponent();
 }

@@ -8,9 +8,9 @@ GameController::GameController()
 
     if (_isGameInitialized)
     {
+        _currentGameState = Game_State::MENU;
         SpawnPlayers();
         SpawnBlocks();
-        _scoreText = "P1: " + std::to_string(_ballPlayer->GetScore()) + " | P2: " + std::to_string(_ballEnemy->GetScore());
     }
 }
 
@@ -55,17 +55,29 @@ void GameController::Run()
 void GameController::ProcessInput()
 {
     int input = _window->Input();
-    _paddlePlayer->SendInput(input);
-    _paddleEnemy->SendInput(Utilities::BrainPaddleInputValue(_paddleEnemy->GetBoxCollision(), _ballEnemy->GetBoxCollision()));
+    if(_currentGameState == Game_State::PLAYING)
+    {
+        _paddlePlayer->SendInput(input);
+        _paddleEnemy->SendInput(Utilities::BrainPaddleInputValue(_paddleEnemy->GetBoxCollision(), _ballEnemy->GetBoxCollision()));
+    }
+    if(_currentGameState != Game_State::PLAYING && input > 0)
+    {
+        if(_currentGameState == Game_State::GAME_OVER)
+            ResetGame();
+        _currentGameState = Game_State::PLAYING;
+    }
 }
 
 void GameController::Update()
 {
-    _ballPlayer->Update();
-    _ballEnemy->Update();
-    _paddlePlayer->Update();
-    _paddleEnemy->Update();
-    _scoreText = "P1: " + std::to_string(_ballPlayer->GetScore()) + " | P2: " + std::to_string(_ballEnemy->GetScore());
+    SetMenuText();
+    if(_currentGameState == Game_State::PLAYING)
+    {
+        _ballPlayer->Update();
+        _ballEnemy->Update();
+        _paddlePlayer->Update();
+        _paddleEnemy->Update();
+    }
 }
 
 void GameController::Render()
@@ -74,7 +86,7 @@ void GameController::Render()
     _ballEnemy->Draw(_window->GetRenderer());
     _paddlePlayer->Draw(_window->GetRenderer());
     _paddleEnemy->Draw(_window->GetRenderer());
-    _scoreDisplay->Draw(_window->GetRenderer(), _scoreText, _scoreDisplay->GetColor());
+    _uiDisplay->Draw(_window->GetRenderer(), _uiDisplay->GetText(), _uiDisplay->GetColor());
 
     for (auto block : _blocks)
         block->Draw(_window->GetRenderer());
@@ -134,8 +146,8 @@ void GameController::SpawnPlayers()
     _paddleEnemy->Initialize(_window->GetRenderer(), _window->GetSurface());
     _paddleEnemy->SetTag("PaddleEnemy");
 
-    _scoreDisplay = new Score("../resources/Acme-Regular.ttf", {propWidth, 0}, {propWidth, 30});
-    _scoreDisplay->Initialize(_scoreText, _window->GetRenderer(), _window->GetSurface(), _scoreDisplay->GetColor());
+    _uiDisplay = new UIDisplay("../resources/Acme-Regular.ttf", {propWidth, 0}, {propWidth, 30});
+    _uiDisplay->Initialize(_uiDisplay->GetText(), _window->GetRenderer(), _window->GetSurface(), _uiDisplay->GetColor());
 }
 
 void GameController::CheckCollisions()
@@ -173,4 +185,36 @@ void GameController::CheckCollisions()
             _blocks.erase(_blocks.begin() + i);
         }
     }
+    
+    if(_blocks.size() <= 0)
+    {
+        _currentGameState = Game_State::GAME_OVER;
+    }
+}
+
+void GameController::SetMenuText()
+{
+    switch (_currentGameState)
+    {
+        case Game_State::MENU:
+            _uiDisplay->SetText(" Press  S  to start ");
+            break;
+        case Game_State::PLAYING:
+            _uiDisplay->SetText( "P1: " + std::to_string(_ballPlayer->GetScore()) + " | P2: " + std::to_string(_ballEnemy->GetScore()));
+            break;
+        case Game_State::GAME_OVER:
+            _uiDisplay->SetText(" Game Over!! \n Press  S  to start ");
+            break;
+        default:
+            break;
+    }
+}
+
+void GameController::ResetGame()
+{
+    SpawnBlocks();
+    _ballPlayer->ResetPosition();
+    _ballEnemy->ResetPosition();
+    _paddlePlayer->ResetPosition();
+    _paddleEnemy->ResetPosition();
 }

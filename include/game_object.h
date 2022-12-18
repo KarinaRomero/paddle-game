@@ -14,6 +14,7 @@ protected:
     Utilities::Vector2D _size = {0, 0};
     Utilities::Vector2D _velocity = {0, 0};
     Utilities::Vector2D _position = {0, 0};
+    Utilities::Vector2D _initialPosition = {0, 0};
     SDL_Rect _boxCollision = {0, 0, 0, 0};
     std::string _tag = "";
 
@@ -29,6 +30,7 @@ public:
     Utilities::Vector2D GetSize() { return _size; };
     Utilities::Vector2D GetPosition() { return _position; };
     SDL_Rect GetBoxCollision() { return _boxCollision; };
+    void ResetPosition(){_position = _initialPosition;};
 
     void CollisionDetected(GameObject* other);
     void Update();

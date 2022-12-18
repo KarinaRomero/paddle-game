@@ -80,4 +80,6 @@ void TextureComponent::RemoveTexture()
 
     _texture = NULL;
     _font = NULL;
+    
+    Logger::LogLibrary("TextureComponent::RemoveTexture", "clear");
 }

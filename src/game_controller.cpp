@@ -49,6 +49,7 @@ void GameController::Run()
             if (endTicks < DELAY)
                 SDL_Delay((int)(DELAY - endTicks));
         }
+        Clear();
         _window->ClearAndQuit();
     }
 }
@@ -103,6 +104,7 @@ void GameController::Clear()
     _ballEnemy->Clean();
     _paddlePlayer->Clean();
     _paddleEnemy->Clean();
+    _uiDisplay->Clean();
 }
 
 void GameController::SpawnBlocks()

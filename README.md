@@ -3,7 +3,7 @@
 ## Game Description
 This game is inspired in the pong game and the blocks puzzle games, the gameplay has two balls and paddles as the image, each ball can break blocks, the player on the right is a bot.
 
-![alt text](https://github.com/KarinaRomero/paddle-game/blob/main/images/gameplay.png)
+![gameplay](https://github.com/KarinaRomero/paddle-game/blob/main/images/gameplay.png)
 
 ## Rules
 - The opponent's ball will never touch your own wall since the range is limited to 3/4 of the screen, but the balls can collide with each other.
@@ -46,13 +46,63 @@ make
 
 *Note: This project contains cmake files that search SDL2, SLD_image, SLD_ttf and SDL_mixer in your system.*
 
+## Known issues and future improvements
+
+- Some textures have a black border.
+- Sometimes the ball collides many times with other objects.
+- The texture component load one texture for each object, this can be improve to load one texture for any number of objects.
+- The Window class holds the logic for the input, this can be separated.
+
 ## Class diagram
+
+![Class Diagram](https://github.com/KarinaRomero/paddle-game/blob/main/images/ClassDiagram.png)
 
 ## Rubric coverage
 
 
+### README (All Rubric Points REQUIRED)
 
-## Known issues and future improvements
+| README      | Location or example for the point |
+| :---        |    :----:   |
+| The README is included with the project and has instructions for building/running the project.      | [How to compile?](#how-to-compile)       
+| If any additional libraries are needed to run the project, these are indicated with cross-platform installation instructions.     | [Libraries](#libraries)       
+| You can submit your writeup as markdown or pdf.     | [Paddle Game](#paddle-game)       
+| The README describes the project you have built      | [Game Description](#game-description)       
+| The README also indicates the file and class structure, along with the expected behavior or output of the program.     | [Class diagram](#class-diagram)       
+| The README indicates which rubric points are addressed. The README also indicates where in the code (i.e. files and line numbers) that the rubric points are addressed.     | [Rubric coverage](#rubric-coverage)       
+
+### Compiling and Testing (All Rubric Points REQUIRED)
+
+| Compiling and Testing      | Location or example for the point |
+| :---        |    :----:   |
+| The project code must compile and run without errors.      | The project is compiled via cmake and contains cmake files to look up the libraries and directories    
+
+### Loops, Functions, I/O (Optional points coverage)
+
+| Loops, Functions, I/O      | Location or example for the point |
+| :---        |    :----:   |
+| The project code is clearly organized into functions.      |  Is present in the code but this class can be an example `window.cpp`
+| The project reads data from an external file or writes data to a file as part of the necessary operation of the program.      |  The best score is saved in a txt file `Utilities::ReadBestScore()` & `Utilities::SaveBestScore(int score)` -> `utilities.h:32`
+| The project accepts input from a user as part of the necessary operation of the program..      |  In the class `Window::Input()` to move the paddle
+
+### Object Oriented Programming (Optional points coverage)
+
+| OOP      | Location or example for the point |
+| :---        |    :----:   |
+| The project code is organized into classes with class attributes to hold the data, and class methods to perform tasks.      |  [Class diagram](#class-diagram) 
+| All class data members are explicitly specified as public, protected, or private.      |  This class can be an example `game_object.h` 
+| All class members that are set to argument values are initialized through member initialization lists.      |  The GameObject constructor `GameObject::GameObject(std::string path, Utilities::Vector2D position) : _position(position), _initialPosition(position), _path(path` -> `game_object.cpp:10`
+| One function is overloaded with different signatures for the same function name.      |  The function `Draw()` in the `GameObject` class -> `game_object.h:39`
+| One function is declared with a template that allows it to accept a generic parameter.      |  The function `Utilities::RandomNumberByRates()` in the `Utilities` namespace -> `utilities.h:32`
+
+### Memory Management (Optional points coverage)
+
+| Memory Management      | Location or example for the point |
+| :---        |    :----:   |
+| At least one class that uses unmanaged dynamically allocated memory, along with any class that otherwise needs to modify state upon the termination of an object, uses a destructor.      |  [Class diagram](#class-diagram) 
+| The project follows the Resource Acquisition Is Initialization pattern where appropriate, by allocating objects at compile-time, initializing objects when they are declared, and utilizing scope to ensure their automatic destruction..      |  This class can be an example `window.cpp`
+| The project uses at least one smart pointer: unique_ptr, shared_ptr, or weak_ptr. The project does not use raw pointers.      |  This class can be an example `main.cpp`
+
 
 ## Assets
 

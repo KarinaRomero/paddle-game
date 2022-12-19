@@ -3,6 +3,7 @@
 ## Game Description
 This game is inspired in the pong game and the blocks puzzle games, the gameplay has two balls and paddles as the image, each ball can break blocks, the player on the right is a bot.
 
+
 ## Rules
 - The opponent's ball will never touch your own wall since the range is limited to 3/4 of the screen, but the balls can collide with each other.
 - Each player collect points when the ball break a block.
@@ -16,10 +17,6 @@ This game is inspired in the pong game and the blocks puzzle games, the gameplay
 | ![#2FAFEB](https://placehold.co/15x15/2FAFEB/2FAFEB.png) `#2FAFEB` **Davon**      | 250       | 15%   |
 | ![#ED9F6B](https://placehold.co/15x15/ED9F6B/ED9F6B.png) `#ED9F6B` **Frank**      | 150       | 22%   |
 | ![#B83C12](https://placehold.co/15x15/B83C12/B83C12.png) `#B83C12` **Zane**      | 100       | 44%   |
-
-
-
-
 
 
 ## Libraries
@@ -51,6 +48,8 @@ make
 ## Class diagram
 
 ## Rubric coverage
+
+
 
 ## Known issues and future improvements
 

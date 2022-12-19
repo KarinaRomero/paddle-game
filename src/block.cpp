@@ -22,7 +22,7 @@ Block::Block(Utilities::Vector2D position, std::string tag) : GameObject()
     g = _colors[_currentColorSelected].g;
     b = _colors[_currentColorSelected].b;
 
-    _points = _currentColorSelected + 1 * 100;
+    _points = _pointValues[_currentColorSelected];
 }
 
 void Block::Draw(SDL_Renderer* renderer)

@@ -85,6 +85,7 @@ void GameController::Update()
 
 void GameController::Render()
 {
+    _background->Draw(_window->GetRenderer());
     if (_currentGameState == Game_State::PLAYING)
     {
         _ballPlayer->Draw(_window->GetRenderer());
@@ -157,6 +158,10 @@ void GameController::SpawnPlayers()
 
     _uiDisplay = new UIDisplay("../resources/Acme-Regular.ttf", {propWidth, 0}, {propWidth * 2, 45});
     _uiDisplay->Initialize(_uiDisplay->GetText(), _window->GetRenderer(), _window->GetSurface(), _uiDisplay->GetColor());
+    
+    _background = new Background("../resources/Background_space.png", {0, 0}, {propWidth*4, propHeight*2});
+    _background->Initialize(_window->GetRenderer(), _window->GetSurface());
+    _background->SetTag("Background");
 }
 
 void GameController::CheckCollisions()

@@ -11,6 +11,7 @@
 #include "ui_display.h"
 #include "utilities.h"
 #include "sound_handler.h"
+#include "background.h"
 
 enum Game_State 
 {
@@ -36,6 +37,7 @@ private:
     Paddle *_paddleEnemy;
     UIDisplay* _uiDisplay;
     SoundHandler * _soundHandler;
+    Background* _background;
     int _bestScore;
 
     Game_State _currentGameState;

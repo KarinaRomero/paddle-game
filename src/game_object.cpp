@@ -7,13 +7,10 @@ GameObject::GameObject()
     _textureComponent = NULL;
 }
 
-GameObject::GameObject(std::string path, Utilities::Vector2D position)
+GameObject::GameObject(std::string path, Utilities::Vector2D position) : _position(position), _initialPosition(position), _path(path)
 {
     Logger::LogLibrary("GameObject::GameObject ", path);
-    _path = path;
     _size = {0, 0};
-    _position = position;
-    _initialPosition = position;
     _velocity = {0, 0};
     _textureComponent = new TextureComponent();
 }

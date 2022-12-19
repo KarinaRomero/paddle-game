@@ -23,14 +23,18 @@ enum Game_State
 class GameController
 {
 public:
+    // Constructor and destructor
     GameController();
     ~GameController();
+    // Run the game
     void Run();
 
 private:
-    // Variables
+    // Pointer to the window object
     Window *_window;
     bool _isGameInitialized = false;
+
+    // Pointer to the GameObjects for the game
     Ball *_ballPlayer;
     Ball *_ballEnemy;
     Paddle *_paddlePlayer;
@@ -38,12 +42,15 @@ private:
     UIDisplay* _uiDisplay;
     SoundHandler * _soundHandler;
     Background* _background;
-    int _bestScore;
 
+    // The best score loaded
+    int _bestScore;
+    // Game state
     Game_State _currentGameState;
-    
+    // Current blocks spawned
     std::vector<Block*> _blocks;
     
+    // Configurations to maintain the FPS
     const int FPS = 60;
     const int DELAY =  1000 / FPS;
 
@@ -62,7 +69,6 @@ private:
     void Render();
     void Clear();
     void CheckBounds(Ball* ball);
-
 };
 
 #endif

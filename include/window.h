@@ -5,6 +5,7 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 
+// Enum of the window states
 enum Window_State
 {
     WINDOW_RUNNING,
@@ -14,10 +15,12 @@ enum Window_State
 class Window
 {
 public:
+    // Constructors and destructor
     Window();
     Window(int screenWidth, int screenHeight, std::string windowName);
     ~Window();
 
+    // Methods
     bool Initialize();
     void ClearRender();
     void UpdateRender();
@@ -25,15 +28,19 @@ public:
     void ClearAndQuit();
     int GetScreenWidth() { return _screenWidth; };
     int GetScreenHeight() { return _screenHeight; };
-
+    
+    // Get and Set
     Window_State GetCurrentWindowState() { return _currentWindowState; };
     SDL_Window *GetWindow() { return _window; };
     SDL_Renderer *GetRenderer() { return _renderer; };
     SDL_Surface *GetSurface(){return _surface;};
 
 private:
+    // Window where the game will be rendered
     SDL_Window *_window;
+    // Rendering state
     SDL_Renderer *_renderer;
+    // Graphical global area where the objects can be renderer
     SDL_Surface *_surface;
 
     // Current window state

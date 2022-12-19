@@ -5,9 +5,8 @@
 
 class Background : public GameObject
 {
-private:
-    /* data */
 public:
+    // Custom constructor for background
     Background(std::string path, Utilities::Vector2D position, Utilities::Vector2D size);
     ~Background();
 };

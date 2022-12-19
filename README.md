@@ -11,11 +11,16 @@ This game is inspired in the pong game and the blocks puzzle games, the gameplay
 
 | Block Name      | Points | Rate     |
 | :---        |    :----:   |          ---: |
-| <span style="color:#122CB8">**Duncan**</span>      | 600       | 9%   |
-| <span style="color:#855885">**Vlad**</span>      | 550       | 10%   |
-| <span style="color:#2FAFEB">**Davon**</span>      | 250       | 15%   |
-| <span style="color:#ED9F6B">**Frank**</span>      | 150       | 22%   |
-| <span style="color:#B83C12">**Zane**</span>      | 100       | 44%   |
+| ![#122CB8](https://placehold.co/15x15/122CB8/122CB8.png) `#122CB8` **Duncan**      | 600       | 9%   |
+| ![#855885](https://placehold.co/15x15/855885/855885.png) `#855885` **Vlad**      | 550       | 10%   |
+| ![#2FAFEB](https://placehold.co/15x15/2FAFEB/2FAFEB.png) `#2FAFEB` **Davon**      | 250       | 15%   |
+| ![#ED9F6B](https://placehold.co/15x15/ED9F6B/ED9F6B.png) `#ED9F6B` **Frank**      | 150       | 22%   |
+| ![#B83C12](https://placehold.co/15x15/B83C12/B83C12.png) `#B83C12` **Zane**      | 100       | 44%   |
+
+
+
+
+
 
 ## Libraries
 This game is made whit **[Simple Direct Media Layer](https://wiki.libsdl.org/SDL2/FrontPage)** for the System operative **Ubuntu**, open the terminal and install the next packages:
@@ -70,3 +75,5 @@ make
 - [Cmake files to find SDL2 and SDL_image](https://github.com/trenki2/SDL2Test)
 - [Cmake files to find SDL_mixer and SDL_ttf](https://github.com/aminosbh/sdl2-ttf-sample/tree/master/cmake/sdl2)
 - [SDL Game Development by Shaun Mitchell](https://www.packtpub.com/product/sdl-game-development/9781849696821?_ga=2.185403753.1362938751.1671468971-1042951398.1670260284)
+- [Colors in markdown git](https://stackoverflow.com/questions/11509830/how-to-add-color-to-githubs-readme-md-file)
+- [Markdown](https://www.markdownguide.org/basic-syntax/#code-blocks)

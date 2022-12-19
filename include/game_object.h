@@ -32,7 +32,7 @@ public:
     Utilities::Vector2D GetPosition() { return _position; };
     void SetPosition(Utilities::Vector2D position) { _position = position; };
     SDL_Rect GetBoxCollision() { return _boxCollision; };
-    void ResetPosition(){_position = _initialPosition;};
+    void Reset();
 
     void CollisionDetected(GameObject* other);
     void Update();

@@ -10,6 +10,7 @@
 #include "block.h"
 #include "ui_display.h"
 #include "utilities.h"
+#include "sound_handler.h"
 
 enum Game_State 
 {
@@ -34,6 +35,7 @@ private:
     Paddle *_paddlePlayer;
     Paddle *_paddleEnemy;
     UIDisplay* _uiDisplay;
+    SoundHandler * _soundHandler;
     int _bestScore;
 
     Game_State _currentGameState;
@@ -49,6 +51,7 @@ private:
     void SetMenuText();
     void ResetGame();
     void LoadBestScore();
+    void InitializeSound();
 
     // GameLoop
     void ProcessInput();

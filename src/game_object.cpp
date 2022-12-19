@@ -47,3 +47,8 @@ void GameObject::Clean()
 void GameObject::CollisionDetected(GameObject* other){
     
 }
+
+void GameObject::Reset()
+{
+    _position = _initialPosition;
+}

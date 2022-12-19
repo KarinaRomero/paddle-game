@@ -14,6 +14,7 @@ public:
     void Update();
     void CollisionDetected(GameObject* other);
     int GetScore(){return _score;};
+    void Reset();
     
 private:
     Utilities::Vector2D _moveLimitsMax;

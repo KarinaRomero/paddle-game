@@ -48,6 +48,12 @@ void Ball::Update()
     _boxCollision.y = _position.y;
 }
 
+void Ball::Reset()
+{
+    GameObject::Reset();
+    _score = 0;
+}
+
 void Ball::CollisionDetected(GameObject *other)
 {
     if (other->GetTag().find("Paddle") != std::string::npos || other->GetTag().find("Block") != std::string::npos || other->GetTag().find("Ball") != std::string::npos)

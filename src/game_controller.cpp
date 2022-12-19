@@ -12,6 +12,7 @@ GameController::GameController()
         LoadBestScore();
         SpawnPlayers();
         SpawnBlocks();
+        InitializeSound();
     }
 }
 
@@ -105,6 +106,7 @@ void GameController::Clear()
     _paddlePlayer->Clean();
     _paddleEnemy->Clean();
     _uiDisplay->Clean();
+    _soundHandler->Clean();
 }
 
 void GameController::SpawnBlocks()
@@ -153,22 +155,29 @@ void GameController::SpawnPlayers()
     _paddleEnemy->Initialize(_window->GetRenderer(), _window->GetSurface());
     _paddleEnemy->SetTag("PaddleEnemy");
 
-    _uiDisplay = new UIDisplay("../resources/Acme-Regular.ttf", {propWidth, 0}, {propWidth*2, 45});
+    _uiDisplay = new UIDisplay("../resources/Acme-Regular.ttf", {propWidth, 0}, {propWidth * 2, 45});
     _uiDisplay->Initialize(_uiDisplay->GetText(), _window->GetRenderer(), _window->GetSurface(), _uiDisplay->GetColor());
 }
 
 void GameController::CheckCollisions()
 {
     if (Utilities::CheckCollision(_ballPlayer->GetBoxCollision(), _paddlePlayer->GetBoxCollision()))
+    {
         _ballPlayer->CollisionDetected(_paddlePlayer);
+        //_soundHandler->PlaySoundEffect(Sound_effect::BALL);
+    }
 
     if (Utilities::CheckCollision(_ballEnemy->GetBoxCollision(), _paddleEnemy->GetBoxCollision()))
+    {
         _ballEnemy->CollisionDetected(_paddleEnemy);
+        //_soundHandler->PlaySoundEffect(Sound_effect::BALL);
+    }
 
     if (Utilities::CheckCollision(_ballPlayer->GetBoxCollision(), _ballEnemy->GetBoxCollision()))
     {
         _ballPlayer->CollisionDetected(_ballEnemy);
         _ballEnemy->CollisionDetected(_ballPlayer);
+        //_soundHandler->PlaySoundEffect(Sound_effect::BALL);
     }
 
     for (int i = 0; i < _blocks.size(); i++)
@@ -182,12 +191,17 @@ void GameController::CheckCollisions()
 
         if (ballBlockPlayer || ballBlockEnemy)
         {
+            //_soundHandler->PlaySoundEffect(Sound_effect::BLOCK);
             Logger::LogLibrary("REMOVE ", _blocks[i]->GetTag() + " Size: " + std::to_string(_blocks.size()));
 
             if (ballBlockEnemy)
+            {
                 _ballEnemy->CollisionDetected(std::move(_blocks[i]));
+            }
             if (ballBlockPlayer)
+            {
                 _ballPlayer->CollisionDetected(std::move(_blocks[i]));
+            }
 
             _blocks.erase(_blocks.begin() + i);
         }
@@ -197,7 +211,7 @@ void GameController::CheckCollisions()
     {
         _currentGameState = Game_State::GAME_OVER;
 
-        if(_ballPlayer->GetScore() < _bestScore)
+        if (_ballPlayer->GetScore() < _bestScore)
             Utilities::SaveBestScore(_ballPlayer->GetScore());
     }
 }
@@ -217,12 +231,12 @@ void GameController::SetMenuText()
     case Game_State::PLAYING:
         _uiDisplay->SetText("P1: " + std::to_string(_ballPlayer->GetScore()) + " | P2: " + std::to_string(_ballEnemy->GetScore()));
         _uiDisplay->SetSize({propWidth, 30});
-        _uiDisplay->ResetPosition();
+        _uiDisplay->Reset();
         break;
     case Game_State::GAME_OVER:
-        _uiDisplay->SetText("\nP2 Score: " + std::to_string(_ballEnemy->GetScore()) + "\nYour Score: "+ std::to_string(_ballPlayer->GetScore()) + " \nYour Best Score:" + std::to_string(_bestScore) +"\nPress  S  to start ");
-        _uiDisplay->SetSize({propWidth * 2, propHeight*3});
-        _uiDisplay->SetPosition({propWidth/2, propHeight});
+        _uiDisplay->SetText("\nP2 Score: " + std::to_string(_ballEnemy->GetScore()) + "\nYour Score: " + std::to_string(_ballPlayer->GetScore()) + " \nYour Best Score:" + std::to_string(_bestScore) + "\nPress  S  to start ");
+        _uiDisplay->SetSize({propWidth * 2, propHeight * 3});
+        _uiDisplay->SetPosition({propWidth / 2, propHeight});
         break;
     default:
         break;
@@ -232,14 +246,20 @@ void GameController::SetMenuText()
 void GameController::ResetGame()
 {
     SpawnBlocks();
-    _ballPlayer->ResetPosition();
-    _ballEnemy->ResetPosition();
-    _paddlePlayer->ResetPosition();
-    _paddleEnemy->ResetPosition();
+    _ballPlayer->Reset();
+    _ballEnemy->Reset();
+    _paddlePlayer->Reset();
+    _paddleEnemy->Reset();
     LoadBestScore();
 }
 
 void GameController::LoadBestScore()
 {
     _bestScore = Utilities::ReadBestScore();
+}
+
+void GameController::InitializeSound()
+{
+    _soundHandler = new SoundHandler();
+    _soundHandler->Initialize();
 }

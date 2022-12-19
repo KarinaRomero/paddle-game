@@ -18,7 +18,7 @@ This game is inspired in the pong game and the blocks puzzle games, the gameplay
 | <span style="color:#B83C12">**Zane**</span>      | 100       | 44%   |
 
 ## Libraries
-This game is made whit [Simple Direct Media Layer](https://wiki.libsdl.org/SDL2/FrontPage) for the System operative Ubuntu, open the terminal and install the next packages:
+This game is made whit **[Simple Direct Media Layer](https://wiki.libsdl.org/SDL2/FrontPage)** for the System operative **Ubuntu**, open the terminal and install the next packages:
 
 ```
 sudo apt-get update
@@ -59,6 +59,8 @@ make
 
 ## Bibliography
 
+- [Udacity resources](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213)
+- [Udacity repositories](https://github.com/orgs/udacity/repositories)
 - [SDL](https://wiki.libsdl.org/SDL2/FrontPage)
 - [Cmake](https://vitux.com/how-to-install-cmake-on-ubuntu/)
 - [Cmake c++ tutorials](https://cmake.org/cmake/help/latest/guide/tutorial/Adding%20Generator%20Expressions.html#exercise-1-setting-the-c-standard-with-interface-libraries)

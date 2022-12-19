@@ -210,9 +210,6 @@ void GameController::CheckCollisions()
     if (_blocks.size() <= 0)
     {
         _currentGameState = Game_State::GAME_OVER;
-
-        if (_ballPlayer->GetScore() < _bestScore)
-            Utilities::SaveBestScore(_ballPlayer->GetScore());
     }
 }
 
@@ -245,6 +242,8 @@ void GameController::SetMenuText()
 
 void GameController::ResetGame()
 {
+    if (_ballPlayer->GetScore() > _bestScore)
+        Utilities::SaveBestScore(_ballPlayer->GetScore());
     SpawnBlocks();
     _ballPlayer->Reset();
     _ballEnemy->Reset();

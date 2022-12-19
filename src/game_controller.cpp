@@ -129,7 +129,7 @@ void GameController::SpawnBlocks()
                 _blocks.emplace_back(new Block({startW, startH}, "Block" + std::to_string(row) + std::to_string(col)));
             }
             startH += 20;
-            // Logger::LogLibraryWarning("SPAWN BLOCKS row: ", std::to_string(startW * row) + " col: " + std::to_string(startW * row));
+            Logger::LogLibraryWarning("SPAWN BLOCKS row: ", std::to_string(startW * row) + " col: " + std::to_string(startW * row));
         }
         startW += 15;
     }
@@ -169,20 +169,20 @@ void GameController::CheckCollisions()
     if (Utilities::CheckCollision(_ballPlayer->GetBoxCollision(), _paddlePlayer->GetBoxCollision()))
     {
         _ballPlayer->CollisionDetected(_paddlePlayer);
-        //_soundHandler->PlaySoundEffect(Sound_effect::BALL);
+        _soundHandler->PlaySoundEffect(Sound_effect::BALL);
     }
 
     if (Utilities::CheckCollision(_ballEnemy->GetBoxCollision(), _paddleEnemy->GetBoxCollision()))
     {
         _ballEnemy->CollisionDetected(_paddleEnemy);
-        //_soundHandler->PlaySoundEffect(Sound_effect::BALL);
+        _soundHandler->PlaySoundEffect(Sound_effect::BALL);
     }
 
     if (Utilities::CheckCollision(_ballPlayer->GetBoxCollision(), _ballEnemy->GetBoxCollision()))
     {
         _ballPlayer->CollisionDetected(_ballEnemy);
         _ballEnemy->CollisionDetected(_ballPlayer);
-        //_soundHandler->PlaySoundEffect(Sound_effect::BALL);
+        _soundHandler->PlaySoundEffect(Sound_effect::BALL);
     }
 
     for (int i = 0; i < _blocks.size(); i++)
@@ -196,7 +196,7 @@ void GameController::CheckCollisions()
 
         if (ballBlockPlayer || ballBlockEnemy)
         {
-            //_soundHandler->PlaySoundEffect(Sound_effect::BLOCK);
+            _soundHandler->PlaySoundEffect(Sound_effect::BLOCK);
             Logger::LogLibrary("REMOVE ", _blocks[i]->GetTag() + " Size: " + std::to_string(_blocks.size()));
 
             if (ballBlockEnemy)
@@ -265,5 +265,5 @@ void GameController::LoadBestScore()
 void GameController::InitializeSound()
 {
     _soundHandler = new SoundHandler();
-    //_soundHandler->Initialize();
+    _soundHandler->Initialize();
 }

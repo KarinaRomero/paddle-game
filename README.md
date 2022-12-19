@@ -3,6 +3,7 @@
 ## Game Description
 This game is inspired in the pong game and the blocks puzzle games, the gameplay has two balls and paddles as the image, each ball can break blocks, the player on the right is a bot.
 
+![alt text](https://github.com/KarinaRomero/paddle-game/blob/main/images/gameplay.png)
 
 ## Rules
 - The opponent's ball will never touch your own wall since the range is limited to 3/4 of the screen, but the balls can collide with each other.

@@ -261,5 +261,5 @@ void GameController::LoadBestScore()
 void GameController::InitializeSound()
 {
     _soundHandler = new SoundHandler();
-    _soundHandler->Initialize();
+    //_soundHandler->Initialize();
 }

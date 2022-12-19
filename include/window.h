@@ -47,9 +47,6 @@ private:
     // Constant default values
     const int SCREEN_WIDTH = 640;
     const int SCREEN_HEIGHT = 480;
-
-    // Methods
-    SDL_Surface *GenerateSurface(std::string path);
 };
 
 #endif

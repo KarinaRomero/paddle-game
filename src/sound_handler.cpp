@@ -38,8 +38,8 @@ SoundHandler::~SoundHandler()
 
 void SoundHandler::PlayMusic()
 {
-    //Mix_PlayMusic(_backgroundMusic, -1);
-    //Mix_VolumeMusic(defaultVolume);
+    Mix_PlayMusic(_backgroundMusic, -1);
+    Mix_VolumeMusic(defaultVolume);
 }
 
 void SoundHandler::PlaySoundEffect(Sound_effect soundEffect)

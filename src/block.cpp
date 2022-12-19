@@ -16,7 +16,7 @@ Block::Block(Utilities::Vector2D position, std::string tag) : GameObject()
     _boxCollision.x = _position.x;
     _boxCollision.y = _position.y;
 
-    _currentColorSelected = Utilities::RandomNumberByRates(rates);
+    _currentColorSelected = Utilities::RandomNumberByRates(_rates);
     
     r = _colors[_currentColorSelected].r;
     g = _colors[_currentColorSelected].g;
@@ -33,12 +33,11 @@ void Block::Draw(SDL_Renderer* renderer)
 void Block::DrawRectShape(SDL_Renderer *renderer)
 {
     SDL_FRect rr = {_position.x, _position.y, _size.x, _size.y};
-    SDL_SetRenderDrawColor(renderer, r, g, b, 0xFF);
+    SDL_SetRenderDrawColor(renderer, r, g, b, alpha);
     SDL_RenderFillRectF(renderer, &rr);
 }
 
 Block::~Block()
 {
-    Logger::LogLibrary("Delete BLOCK ", "-------------------------------------");
 }
 

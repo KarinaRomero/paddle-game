@@ -62,42 +62,24 @@ bool Window::Initialize()
     if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
     {
         Logger::LogLibraryError("Window::Initialize > Init_Image ", IMG_GetError());
+        return false;
     }
 
     if (TTF_Init() == -1)
     {
         Logger::LogLibraryError("Window::Initialize > Init_TTF", TTF_GetError());
+        return false;
     }
 
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
     {
         Logger::LogLibraryError("Window::Initialize > Mix_OpenAudio", Mix_GetError());
+        return false;
     }
 
     _currentWindowState = Window_State::WINDOW_RUNNING;
 
     return true;
-}
-
-SDL_Surface *Window::GenerateSurface(std::string path)
-{
-    SDL_Surface *optimizedSurface = NULL;
-    SDL_Surface *tempSurface = IMG_Load(path.c_str());
-
-    if (_surface == NULL)
-    {
-        Logger::LogLibraryError("Window::Initialize > GenerateSurface ", SDL_GetError());
-    }
-
-    optimizedSurface = SDL_ConvertSurface(tempSurface, _surface->format, 0);
-
-    if (_surface == NULL)
-    {
-        Logger::LogLibraryError("Window::Initialize > SDL_ConvertSurface ", SDL_GetError());
-    }
-
-    SDL_FreeSurface(tempSurface);
-    return optimizedSurface;
 }
 
 void Window::ClearRender()

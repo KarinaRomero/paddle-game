@@ -11,6 +11,7 @@ TextureComponent::TextureComponent()
 TextureComponent::~TextureComponent()
 {
 }
+
 void TextureComponent::LoadTextureFont(std::string path, std::string displayText, SDL_Renderer *worldRenderer, SDL_Surface *worldSurface, SDL_Color color)
 {
     _font = TTF_OpenFont(path.c_str(), 48);

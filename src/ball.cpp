@@ -35,6 +35,7 @@ void Ball::Update()
     {
         _velocity.x *= -1;
         _faults++;
+        _score -= _faultValue;
     }
     if (_position.y >= _moveLimitsMax.y || _position.y <= _moveLimitsMin.y)
     {
@@ -65,7 +66,6 @@ void Ball::CollisionDetected(GameObject *other)
         {
             Block* block = dynamic_cast<Block*>(other);
             _score+= block->GetPoints();
-            delete block;
         }
         //Logger::LogLibrary("Ball::CollisionDetected ME: " + _tag, " Other: " + other->GetTag());
     }

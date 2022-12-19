@@ -21,6 +21,7 @@ private:
     Utilities::Vector2D _moveLimitsMin;
     int _score = 0;
     int _faults = 0;
+    const int _faultValue = 200;
 };
 
 #endif

@@ -36,13 +36,13 @@ private:
     bool _isGameInitialized = false;
 
     // Pointer to the GameObjects for the game
-    Ball *_ballPlayer;
-    Ball *_ballEnemy;
-    Paddle *_paddlePlayer;
-    Paddle *_paddleEnemy;
-    UIDisplay* _uiDisplay;
-    SoundHandler * _soundHandler;
-    Background* _background;
+    std::unique_ptr<Ball> _ballPlayer;
+    std::unique_ptr<Ball> _ballEnemy;
+    std::unique_ptr<Paddle> _paddlePlayer;
+    std::unique_ptr<Paddle> _paddleEnemy;
+    std::unique_ptr<UIDisplay> _uiDisplay;
+    std::unique_ptr<SoundHandler> _soundHandler;
+    std::unique_ptr<Background> _background;
 
     // The best score loaded
     int _bestScore;

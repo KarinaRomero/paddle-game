@@ -194,27 +194,27 @@ void GameController::SpawnPlayers()
 {
     float propWidth = _window->GetScreenWidth() / 4;
     float propHeight = _window->GetScreenHeight() / 2;
-
-    _ballPlayer = new Ball("../resources/ball.png", {propWidth, propHeight}, {0, 0}, {propWidth * 3, static_cast<float>(_window->GetScreenHeight())});
+    
+    _ballPlayer = std::unique_ptr<Ball>(new Ball("../resources/ball.png", {propWidth, propHeight}, {0, 0}, {propWidth * 3, static_cast<float>(_window->GetScreenHeight())}));
     _ballPlayer->Initialize(_window->GetRenderer(), _window->GetSurface());
     _ballPlayer->SetTag("BallPlayer");
 
-    _ballEnemy = new Ball("../resources/enemy-ball.png", {propWidth * 3, propHeight}, {propWidth, 0}, {static_cast<float>(_window->GetScreenWidth()), static_cast<float>(_window->GetScreenHeight())});
+    _ballEnemy = std::unique_ptr<Ball>(new Ball("../resources/enemy-ball.png", {propWidth * 3, propHeight}, {propWidth, 0}, {static_cast<float>(_window->GetScreenWidth()), static_cast<float>(_window->GetScreenHeight())}));
     _ballEnemy->Initialize(_window->GetRenderer(), _window->GetSurface());
     _ballEnemy->SetTag("BallEnemy");
 
-    _paddlePlayer = new Paddle("../resources/paddle.png", {10, propHeight}, {0, static_cast<float>(_window->GetScreenHeight())});
+    _paddlePlayer = std::unique_ptr<Paddle>(new Paddle("../resources/paddle.png", {10, propHeight}, {0, static_cast<float>(_window->GetScreenHeight())}));
     _paddlePlayer->Initialize(_window->GetRenderer(), _window->GetSurface());
     _paddlePlayer->SetTag("PaddlePlayer");
 
-    _paddleEnemy = new Paddle("../resources/paddle1.png", {static_cast<float>(_window->GetScreenWidth() - 50), propHeight}, {0, static_cast<float>(_window->GetScreenHeight())});
+    _paddleEnemy = std::unique_ptr<Paddle>(new Paddle("../resources/paddle1.png", {static_cast<float>(_window->GetScreenWidth() - 50), propHeight}, {0, static_cast<float>(_window->GetScreenHeight())}));
     _paddleEnemy->Initialize(_window->GetRenderer(), _window->GetSurface());
     _paddleEnemy->SetTag("PaddleEnemy");
 
-    _uiDisplay = new UIDisplay("../resources/Acme-Regular.ttf", {propWidth, 0}, {propWidth * 2, 45});
+    _uiDisplay = std::unique_ptr<UIDisplay>(new UIDisplay("../resources/Acme-Regular.ttf", {propWidth, 0}, {propWidth * 2, 45}));
     _uiDisplay->Initialize(_uiDisplay->GetText(), _window->GetRenderer(), _window->GetSurface(), _uiDisplay->GetColor());
-
-    _background = new Background("../resources/Background_space.png", {0, 0}, {propWidth * 4, propHeight * 2});
+    
+    _background = std::unique_ptr<Background>(new Background("../resources/Background_space.png", {0, 0}, {propWidth * 4, propHeight * 2}));
     _background->Initialize(_window->GetRenderer(), _window->GetSurface());
     _background->SetTag("Background");
 }
@@ -226,20 +226,20 @@ void GameController::CheckCollisions()
 {
     if (Utilities::CheckCollision(_ballPlayer->GetBoxCollision(), _paddlePlayer->GetBoxCollision()))
     {
-        _ballPlayer->CollisionDetected(_paddlePlayer);
+        _ballPlayer->CollisionDetected(_paddlePlayer.get());
         _soundHandler->PlaySoundEffect(Sound_effect::BALL);
     }
 
     if (Utilities::CheckCollision(_ballEnemy->GetBoxCollision(), _paddleEnemy->GetBoxCollision()))
     {
-        _ballEnemy->CollisionDetected(_paddleEnemy);
+        _ballEnemy->CollisionDetected(_paddleEnemy.get());
         _soundHandler->PlaySoundEffect(Sound_effect::BALL);
     }
 
     if (Utilities::CheckCollision(_ballPlayer->GetBoxCollision(), _ballEnemy->GetBoxCollision()))
     {
-        _ballPlayer->CollisionDetected(_ballEnemy);
-        _ballEnemy->CollisionDetected(_ballPlayer);
+        _ballPlayer->CollisionDetected(_ballEnemy.get());
+        _ballEnemy->CollisionDetected(_ballPlayer.get());
         _soundHandler->PlaySoundEffect(Sound_effect::BALL);
     }
 
@@ -334,6 +334,6 @@ void GameController::LoadBestScore()
  */
 void GameController::InitializeSound()
 {
-    _soundHandler = new SoundHandler();
+    _soundHandler = std::make_unique<SoundHandler>();
     _soundHandler->Initialize();
 }

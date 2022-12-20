@@ -33,6 +33,12 @@ sudo apt-get install libsdl2-mixer-dev
 
 ## How to compile?
 
+First of all you need the compiler gcc/g++ >= 7.4.0 in this **[link](https://www.guru99.com/c-gcc-install.html)** there are the general instructions, but if you are using ubuntu, run the next command in the command line:
+
+```
+sudo apt install build-essential
+```
+
 This project can be compiled whit cmake If it is not installed on your PC, follow the instructions in this **[link](https://vitux.com/how-to-install-cmake-on-ubuntu/)**, or if you are using ubuntu, you can simply install by command line using:
 
 ```

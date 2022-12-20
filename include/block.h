@@ -35,7 +35,7 @@ public:
     // Rule of five copy constructor
     Block(const Block &block);
     // Rule of five copy assignment
-    Block &operator=(Block block);
+    Block &operator=(const Block &block);
     //Rule of five move constructor
     Block(Block&& block);
     // Rule of five move assignment

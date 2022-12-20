@@ -28,31 +28,25 @@ Block::Block(Utilities::Vector2D position, std::string tag) : GameObject()
 Block::Block(const Block &block): GameObject()
 {
     Logger::LogLibrary("Block::Block ", "Rule of five copy constructor");
-    _size = {0, 0};
-    _velocity = {0, 0};
+    _size = block._size;
+    _velocity = block._velocity;
     _tag = block._tag;
     _position = block._position;
 
-    _boxCollision.w = block._size.x;
-    _boxCollision.h = block._size.y;
-    _boxCollision.x = block._position.x;
-    _boxCollision.y = block._position.y;
+    _boxCollision = block._boxCollision;
     _currentColorSelected = block._currentColorSelected;
     _points = block._pointValues[_currentColorSelected];
 }
 
-Block &Block::operator=(Block block)
+Block &Block::operator=(const Block &block)
 {
     Logger::LogLibrary("Block::Block ", "Rule of five copy assignment");
-    _size = {0, 0};
-    _velocity = {0, 0};
+    _size = block._size;
+    _velocity = block._velocity;
     _tag = block._tag;
     _position = block._position;
 
-    _boxCollision.w = block._size.x;
-    _boxCollision.h = block._size.y;
-    _boxCollision.x = block._position.x;
-    _boxCollision.y = block._position.y;
+    _boxCollision = block._boxCollision;
     _currentColorSelected = block._currentColorSelected;
     _points = block._pointValues[_currentColorSelected];
 
@@ -62,15 +56,12 @@ Block &Block::operator=(Block block)
 Block::Block(Block&& block): GameObject()
 {
     Logger::LogLibrary("Block::Block ", "Rule of five move constructor");
-    _size = {0, 0};
-    _velocity = {0, 0};
+    _size = block._size;
+    _velocity = block._velocity;
     _tag = block._tag;
     _position = block._position;
 
-    _boxCollision.w = block._size.x;
-    _boxCollision.h = block._size.y;
-    _boxCollision.x = block._position.x;
-    _boxCollision.y = block._position.y;
+    _boxCollision = block._boxCollision;
     _currentColorSelected = block._currentColorSelected;
     _points = block._pointValues[_currentColorSelected];
 }
@@ -79,17 +70,20 @@ Block::Block(Block&& block): GameObject()
 Block& Block::operator=(Block&& block)
 {
     Logger::LogLibrary("Block::Block ", "Rule of five move assignment");
-    _size = {0, 0};
-    _velocity = {0, 0};
+
+    if (&block == this)  return *this;
+
+    _size = block._size;
+    _velocity = block._velocity;
     _tag = block._tag;
     _position = block._position;
 
-    _boxCollision.w = block._size.x;
-    _boxCollision.h = block._size.y;
-    _boxCollision.x = block._position.x;
-    _boxCollision.y = block._position.y;
+    _boxCollision = block._boxCollision;
     _currentColorSelected = block._currentColorSelected;
     _points = block._pointValues[_currentColorSelected];
+
+    block._tag = nullptr;
+    block._currentColorSelected = 0;
 
     return *this;
 }

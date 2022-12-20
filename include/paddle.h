@@ -9,11 +9,12 @@ public:
     // Constructors and destructor
     Paddle();
     Paddle(std::string path, Utilities::Vector2D position, Utilities::Vector2D moveMinMax);
-    ~Paddle();
+    ~Paddle() override;
     
     // Constructors and destructor
     void SendInput(int input);
-    void Update();
+    void Update() override;
+    void CollisionDetected(GameObject* other) override;
     
     // Get and set
     int GetState(){return _currentState;};

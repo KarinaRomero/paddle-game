@@ -41,9 +41,6 @@ void GameObject::Clean()
 {
     _textureComponent->RemoveTexture();
 }
-void GameObject::CollisionDetected(GameObject* other){
-    
-}
 
 void GameObject::Reset()
 {

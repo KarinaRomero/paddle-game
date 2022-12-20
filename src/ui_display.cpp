@@ -11,3 +11,10 @@ UIDisplay::~UIDisplay()
 {
 }
 
+void UIDisplay::Update()
+{
+}
+
+void UIDisplay::CollisionDetected(GameObject* other)
+{
+}

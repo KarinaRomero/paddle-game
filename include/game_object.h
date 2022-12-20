@@ -41,12 +41,14 @@ public:
     void SetPosition(Utilities::Vector2D position) { _position = position; };
     SDL_Rect GetBoxCollision() { return _boxCollision; };
 
-    // Methods
-    void Reset();
-    void CollisionDetected(GameObject* other);
-    void Update();
-    void Draw(SDL_Renderer *renderer);
-    void Draw(SDL_Renderer *renderer, std::string displayText, SDL_Color color);
+    // Methods :
+    // Pure virtual 
+    virtual void CollisionDetected(GameObject* other) = 0;
+    virtual void Update() = 0;
+    // Virtual 
+    virtual void Draw(SDL_Renderer *renderer);
+    virtual void Draw(SDL_Renderer *renderer, std::string displayText, SDL_Color color);
+    virtual void Reset();
     void Clean();
 };
 

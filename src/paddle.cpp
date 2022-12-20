@@ -40,3 +40,7 @@ void Paddle::SendInput(int input)
 void Paddle::Update()
 {
 }
+
+void Paddle::CollisionDetected(GameObject* other)
+{
+}

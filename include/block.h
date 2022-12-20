@@ -41,10 +41,12 @@ public:
     // Rule of five move assignment
     Block& operator=(Block&& block);
     // Rule of five destructor
-    ~Block();
+    ~Block() override;
     
     // Overwrite the function of the parent GameObject
-    void Draw(SDL_Renderer* renderer);
+    void Draw(SDL_Renderer* renderer) override;
+    void Update() override;
+    void CollisionDetected(GameObject* other) override;
 
     // Get and Set
     int GetPoints(){return _points;};

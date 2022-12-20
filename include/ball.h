@@ -10,12 +10,12 @@ public:
     // Constructors and destructor
     Ball();
     Ball(std::string path, Utilities::Vector2D position, Utilities::Vector2D min, Utilities::Vector2D max);
-    ~Ball();
+    ~Ball() override;
     
     // Overwrite methods for the GameObject class
-    void Update();
-    void CollisionDetected(GameObject* other);
-    void Reset();
+    void Update() override;
+    void CollisionDetected(GameObject* other) override;
+    void Reset() override;
 
     // Get and Set
     int GetScore(){return _score;};

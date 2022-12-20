@@ -100,6 +100,14 @@ void Block::DrawRectShape(SDL_Renderer *renderer)
     SDL_RenderFillRectF(renderer, &rr);
 }
 
+void Block::Update()
+{
+}
+
+void Block::CollisionDetected(GameObject* other)
+{
+}
+
 Block::~Block()
 {
     Logger::LogLibrary("Block::Block ", "Rule of five destructor");

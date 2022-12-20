@@ -8,7 +8,10 @@
 #include "SDL_ttf.h"
 #include "SDL_mixer.h"
 
-
+/**
+ * Constructor default.
+ *
+ */
 Window::Window()
 {
     // Initialize values by default
@@ -20,7 +23,15 @@ Window::Window()
     _renderer = NULL;
     _surface = NULL;
 }
-
+/**
+ * Custom constructor.
+ *
+ * Sets the general configurations for this window.
+ *
+ * @param screenWidth the size of the window width in pixels.
+ * @param screenHeight he size of the window height in pixels.
+ * @param windowName the name to display in the window.
+ */
 Window::Window(int screenWidth, int screenHeight, std::string windowName) : _screenWidth(screenWidth), _screenHeight(screenHeight), _windowName(windowName)
 {
     _window = NULL;
@@ -28,6 +39,12 @@ Window::Window(int screenWidth, int screenHeight, std::string windowName) : _scr
     _surface = NULL;
 }
 
+/**
+ * Initialize all the objects necessary for this window
+ * SDL_video, the window, the renderer, image, mixer and ttf.
+ *
+ * @return false if any of them can be initialized.
+ */
 bool Window::Initialize()
 {
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -82,17 +99,26 @@ bool Window::Initialize()
     return true;
 }
 
+/**
+ * Clear the renderer to dispose any existing cached frame
+ */
 void Window::ClearRender()
 {
     SDL_SetRenderDrawColor(_renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(_renderer);
 }
 
+/**
+ * Update the renderer performer
+ */
 void Window::UpdateRender()
 {
     SDL_RenderPresent(_renderer);
 }
 
+/**
+ * Listen if a key was pressed
+ */
 int Window::Input()
 {
     int inputValue = 0;
@@ -124,6 +150,9 @@ int Window::Input()
     return inputValue;
 }
 
+/**
+ * Free all the resources and Quit mixer, ttf, image and SDL
+ */
 void Window::ClearAndQuit()
 {
     SDL_FreeSurface(_surface);

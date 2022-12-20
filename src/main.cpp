@@ -5,6 +5,7 @@
 #include "logger.h"
 #include "game_controller.h"
 
+// Entry point
 int main(int argc, char *argv[])
 {
   Logger::LogLibrary("MAIN", "START()");

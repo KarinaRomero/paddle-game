@@ -1,17 +1,32 @@
 #include "logger.h"
 #include "game_controller.h"
 
+
+/**
+ * Constructor default.
+ *
+ * Initializes all objects for this game
+ *
+ */
 GameController::GameController()
 {
+    // Creates the window
     _window = new Window();
+    // Set up all the objects to use SDL
     _isGameInitialized = _window->Initialize();
 
+    // Checks if all is loaded correctly
     if (_isGameInitialized)
     {
+        // Set the state as a menu
         _currentGameState = Game_State::MENU;
+        // Load the best score
         LoadBestScore();
+        // Spawn the players (paddle and ball)
         SpawnPlayers();
+        // Spawn the blocks
         SpawnBlocks();
+        // Initializes the music
         InitializeSound();
     }
 }
@@ -20,6 +35,12 @@ GameController::~GameController()
 {
 }
 
+/**
+ * Run the game loop.
+ *
+ * if all is loaded the game loop starts.
+ *
+ */
 void GameController::Run()
 {
     if (!_isGameInitialized)
@@ -55,6 +76,12 @@ void GameController::Run()
     }
 }
 
+/**
+ * Process the input.
+ *
+ * processes if any key of interest is pressed and sends it to the objects that require it.
+ *
+ */
 void GameController::ProcessInput()
 {
     int input = _window->Input();
@@ -71,6 +98,12 @@ void GameController::ProcessInput()
     }
 }
 
+/**
+ * Update the game loop.
+ *
+ * Calls the Update to the required objects.
+ *
+ */
 void GameController::Update()
 {
     SetMenuText();
@@ -83,6 +116,12 @@ void GameController::Update()
     }
 }
 
+/**
+ * Render the game loop.
+ *
+ * Calls the Render to the required objects.
+ *
+ */
 void GameController::Render()
 {
     _background->Draw(_window->GetRenderer());
@@ -100,6 +139,12 @@ void GameController::Render()
     _uiDisplay->Draw(_window->GetRenderer(), _uiDisplay->GetText(), _uiDisplay->GetColor());
 }
 
+/**
+ * Clear the objects.
+ *
+ * Calls the Clear when objects are no longer needed.
+ *
+ */
 void GameController::Clear()
 {
     _ballPlayer->Clean();
@@ -110,6 +155,9 @@ void GameController::Clear()
     _soundHandler->Clean();
 }
 
+/**
+ * Spawn randomly the blocks for the game.
+ */
 void GameController::SpawnBlocks()
 {
     float offset = 30;
@@ -134,7 +182,9 @@ void GameController::SpawnBlocks()
         startW += 15;
     }
 }
-
+/**
+ * Spawn the player and the bot.
+ */
 void GameController::SpawnPlayers()
 {
     float propWidth = _window->GetScreenWidth() / 4;
@@ -164,6 +214,9 @@ void GameController::SpawnPlayers()
     _background->SetTag("Background");
 }
 
+/**
+ * Check the collisions for game loop.
+ */
 void GameController::CheckCollisions()
 {
     if (Utilities::CheckCollision(_ballPlayer->GetBoxCollision(), _paddlePlayer->GetBoxCollision()))
@@ -218,6 +271,9 @@ void GameController::CheckCollisions()
     }
 }
 
+/**
+ * Set the display text.
+ */
 void GameController::SetMenuText()
 {
     float propWidth = _window->GetScreenWidth() / 3;
@@ -245,6 +301,9 @@ void GameController::SetMenuText()
     }
 }
 
+/**
+ * Reset all the objects to play again.
+ */
 void GameController::ResetGame()
 {
     if (_ballPlayer->GetScore() > _bestScore)
@@ -257,11 +316,17 @@ void GameController::ResetGame()
     LoadBestScore();
 }
 
+/**
+ * Load the Best score.
+ */
 void GameController::LoadBestScore()
 {
     _bestScore = Utilities::ReadBestScore();
 }
 
+/**
+ * Initializes the music.
+ */
 void GameController::InitializeSound()
 {
     _soundHandler = new SoundHandler();

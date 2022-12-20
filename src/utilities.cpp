@@ -2,6 +2,7 @@
 #include <cmath>
 #include <iostream>
 #include <fstream> 
+#include <random>
 
 bool Utilities::CheckCollision(SDL_Rect objectA, SDL_Rect objectB)
 {
@@ -30,7 +31,11 @@ double Utilities::Distance(SDL_Rect objectA, SDL_Rect objectB)
 
 int Utilities::BrainPaddleInputValue(SDL_Rect objectA, SDL_Rect objectB)
 {
-    bool moveProbability = (rand() % 100) < 75;
+    std::random_device randomDevice;
+    std::mt19937 generator(randomDevice());
+    std::uniform_int_distribution<int> distribution(0, 100);
+
+    bool moveProbability = distribution(generator) < 75;
 
     if (moveProbability)
         return 0;

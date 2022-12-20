@@ -1,6 +1,7 @@
 #include "logger.h"
 #include "game_controller.h"
-
+#include <random>
+#include <functional>
 
 /**
  * Constructor default.
@@ -167,12 +168,17 @@ void GameController::SpawnBlocks()
     float segmentsW = startW / 15;
     float segmentsH = (_window->GetScreenHeight() - offset) / 20;
 
+    std::random_device randomDevice;
+    std::mt19937 generator(randomDevice());
+    std::uniform_int_distribution<int> distribution(0, 100);
+    auto getRandom = std::bind(distribution, generator);
+
     for (int row = 1; row <= segmentsW; row++)
     {
         startH = offset;
         for (int col = 1; col <= segmentsH; col++)
         {
-            if ((rand() % 100) < 50)
+            if (getRandom() < 50)
             {
                 _blocks.emplace_back(new Block({startW, startH}, "Block" + std::to_string(row) + std::to_string(col)));
             }
@@ -208,8 +214,8 @@ void GameController::SpawnPlayers()
 
     _uiDisplay = new UIDisplay("../resources/Acme-Regular.ttf", {propWidth, 0}, {propWidth * 2, 45});
     _uiDisplay->Initialize(_uiDisplay->GetText(), _window->GetRenderer(), _window->GetSurface(), _uiDisplay->GetColor());
-    
-    _background = new Background("../resources/Background_space.png", {0, 0}, {propWidth*4, propHeight*2});
+
+    _background = new Background("../resources/Background_space.png", {0, 0}, {propWidth * 4, propHeight * 2});
     _background->Initialize(_window->GetRenderer(), _window->GetSurface());
     _background->SetTag("Background");
 }
@@ -254,11 +260,11 @@ void GameController::CheckCollisions()
 
             if (ballBlockEnemy)
             {
-                _ballEnemy->CollisionDetected(std::move(_blocks[i]));
+                _ballEnemy->CollisionDetected(_blocks[i]);
             }
             if (ballBlockPlayer)
             {
-                _ballPlayer->CollisionDetected(std::move(_blocks[i]));
+                _ballPlayer->CollisionDetected(_blocks[i]);
             }
 
             _blocks.erase(_blocks.begin() + i);

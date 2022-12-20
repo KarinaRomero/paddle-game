@@ -28,9 +28,19 @@ private:
     void DrawRectShape(SDL_Renderer *renderer);
     
 public:
-    // Constructors and destructor
+    // Default constructor
     Block();
+    // Custom constructor
     Block(Utilities::Vector2D position, std::string tag);
+    // Rule of five copy constructor
+    Block(const Block &block);
+    // Rule of five copy assignment
+    Block &operator=(Block block);
+    //Rule of five move constructor
+    Block(Block&& block);
+    // Rule of five move assignment
+    Block& operator=(Block&& block);
+    // Rule of five destructor
     ~Block();
     
     // Overwrite the function of the parent GameObject

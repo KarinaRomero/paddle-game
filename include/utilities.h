@@ -5,6 +5,8 @@
 #include "SDL2/SDL.h"
 #include "string"
 
+#include <random>
+
 namespace Utilities
 {
     /*
@@ -74,7 +76,11 @@ namespace Utilities
     template <typename T>
     T RandomNumberByRates(std::vector<T> rates)
     {
-        auto randomNumber = rand() % 100;
+        std::random_device randomDevice;
+        std::mt19937 generator(randomDevice());
+        std::uniform_int_distribution<int> distribution(0, 100);
+
+        auto randomNumber = distribution(generator);
         auto counter = 0;
         auto rateAccumulated = 0;
 

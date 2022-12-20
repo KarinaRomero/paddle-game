@@ -2,7 +2,6 @@
 #include <cmath>
 #include <iostream>
 #include <fstream> 
-#include <random>
 
 bool Utilities::CheckCollision(SDL_Rect objectA, SDL_Rect objectB)
 {

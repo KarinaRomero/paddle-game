@@ -12,7 +12,7 @@ GameObject::GameObject(std::string path, Utilities::Vector2D position) : _positi
     Logger::LogLibrary("GameObject::GameObject ", path);
     _size = {0, 0};
     _velocity = {0, 0};
-    _textureComponent = new TextureComponent();
+    _textureComponent = std::make_unique<TextureComponent>();
 }
 
 void GameObject::Initialize(SDL_Renderer *worldRenderer, SDL_Surface *worldSurface)

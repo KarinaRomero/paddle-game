@@ -3,12 +3,13 @@
 
 #include "texture_component.h"
 #include "utilities.h"
+#include <memory>
 
 class GameObject
 {
 private:
     // The texture for this GameObject
-    TextureComponent *_textureComponent;
+    std::unique_ptr<TextureComponent> _textureComponent;
 
 protected:
     // Path of the texture

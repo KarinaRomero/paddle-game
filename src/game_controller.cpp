@@ -183,7 +183,7 @@ void GameController::SpawnBlocks()
                 _blocks.emplace_back(new Block({startW, startH}, "Block" + std::to_string(row) + std::to_string(col)));
             }
             startH += 20;
-            Logger::LogLibraryWarning("SPAWN BLOCKS row: ", std::to_string(startW * row) + " col: " + std::to_string(startW * row));
+            Logger::LogLibrary("SPAWN BLOCKS row: ", std::to_string(startW * row) + " col: " + std::to_string(startW * row));
         }
         startW += 15;
     }

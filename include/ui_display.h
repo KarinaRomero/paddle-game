@@ -11,9 +11,9 @@ public:
     ~UIDisplay() override;
 
     // Get and Set
-    SDL_Color GetColor() { return _color; };
+    SDL_Color GetColor()const { return _color; };
     void SetText(std::string displayText){ _currentText = displayText;};
-    std::string GetText(){return _currentText;};
+    std::string GetText()const {return _currentText;};
 
     void Update() override;
     void CollisionDetected(GameObject* other) override;

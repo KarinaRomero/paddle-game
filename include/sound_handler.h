@@ -21,7 +21,6 @@ public:
     void Initialize();
     void PlayMusic();
     void PlaySoundEffect(Sound_effect soundEffect);
-    void Clean();
 
 private:
     // Constant paths where the audio tracks are stored

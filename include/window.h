@@ -25,14 +25,14 @@ public:
     void ClearRender();
     void UpdateRender();
     int Input();
-    int GetScreenWidth() { return _screenWidth; };
-    int GetScreenHeight() { return _screenHeight; };
+    int GetScreenWidth()const { return _screenWidth; };
+    int GetScreenHeight()const { return _screenHeight; };
     
     // Get and Set
-    Window_State GetCurrentWindowState() { return _currentWindowState; };
-    SDL_Window *GetWindow() { return _window; };
-    SDL_Renderer *GetRenderer() { return _renderer; };
-    SDL_Surface *GetSurface(){return _surface;};
+    Window_State GetCurrentWindowState()const  { return _currentWindowState; };
+    SDL_Window *GetWindow()const   { return _window; };
+    SDL_Renderer *GetRenderer()const   { return _renderer; };
+    SDL_Surface *GetSurface()const  {return _surface;};
 
 private:
     // Window where the game will be rendered

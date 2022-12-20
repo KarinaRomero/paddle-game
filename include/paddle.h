@@ -17,7 +17,7 @@ public:
     void CollisionDetected(GameObject* other) override;
     
     // Get and set
-    int GetState(){return _currentState;};
+    int GetState()const {return _currentState;};
     
 private:
     Utilities::Vector2D _moveMinMax;

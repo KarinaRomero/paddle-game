@@ -34,12 +34,12 @@ public:
 
     // Get and Set
     void SetTag(std::string tagValue) { _tag = tagValue; };
-    std::string GetTag(){return _tag;};
-    Utilities::Vector2D GetSize() { return _size; };
+    std::string GetTag()const {return _tag;};
+    Utilities::Vector2D GetSize()const { return _size; };
     void SetSize(Utilities::Vector2D size) { _size = size; };
-    Utilities::Vector2D GetPosition() { return _position; };
+    Utilities::Vector2D GetPosition()const { return _position; };
     void SetPosition(Utilities::Vector2D position) { _position = position; };
-    SDL_Rect GetBoxCollision() { return _boxCollision; };
+    SDL_Rect GetBoxCollision()const { return _boxCollision; };
 
     // Methods :
     // Pure virtual 

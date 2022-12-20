@@ -18,7 +18,7 @@ public:
     void Reset() override;
 
     // Get and Set
-    int GetScore(){return _score;};
+    int GetScore()const {return _score;};
     
 private:
     // Limits the ball on the screen
@@ -28,7 +28,7 @@ private:
     int _score = 0;
     // Number of faults
     int _faults = 0;
-    // The value for an fault
+    // The value for a fault
     const int _faultValue = 200;
 };
 

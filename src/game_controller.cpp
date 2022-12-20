@@ -34,6 +34,11 @@ GameController::GameController()
 
 GameController::~GameController()
 {
+    for (int i = 0; i < _blocks.size(); i++)
+    {
+        delete _blocks[i];
+    }
+    _blocks.clear();
 }
 
 /**
@@ -152,7 +157,6 @@ void GameController::Clear()
     _paddlePlayer->Clean();
     _paddleEnemy->Clean();
     _uiDisplay->Clean();
-    _soundHandler->Clean();
 }
 
 /**
@@ -161,11 +165,11 @@ void GameController::Clear()
 void GameController::SpawnBlocks()
 {
     float offset = 30;
-    float startW = _window->GetScreenWidth() / 3;
+    float startW = static_cast<float>(_window->GetScreenWidth()) / 3.f;
     float startH = offset;
 
-    float segmentsW = startW / 15;
-    float segmentsH = (_window->GetScreenHeight() - offset) / 20;
+    float segmentsW = startW / 15.f;
+    float segmentsH = (static_cast<float>(_window->GetScreenHeight()) - offset) / 20.f;
 
     std::random_device randomDevice;
     std::mt19937 generator(randomDevice());
@@ -192,14 +196,14 @@ void GameController::SpawnBlocks()
  */
 void GameController::SpawnPlayers()
 {
-    float propWidth = _window->GetScreenWidth() / 4;
-    float propHeight = _window->GetScreenHeight() / 2;
+    float propWidth = static_cast<float>(_window->GetScreenWidth()) / 4.f;
+    float propHeight = static_cast<float>(_window->GetScreenHeight()) / 2.f;
     
     _ballPlayer = std::unique_ptr<Ball>(new Ball("../resources/ball.png", {propWidth, propHeight}, {0, 0}, {propWidth * 3, static_cast<float>(_window->GetScreenHeight())}));
     _ballPlayer->Initialize(_window->GetRenderer(), _window->GetSurface());
     _ballPlayer->SetTag("BallPlayer");
 
-    _ballEnemy = std::unique_ptr<Ball>(new Ball("../resources/enemy-ball.png", {propWidth * 3, propHeight}, {propWidth, 0}, {static_cast<float>(_window->GetScreenWidth()), static_cast<float>(_window->GetScreenHeight())}));
+    _ballEnemy = std::unique_ptr<Ball>(new Ball("../resources/enemy-ball.png", {propWidth * 3.f, propHeight}, {propWidth, 0}, {static_cast<float>(_window->GetScreenWidth()), static_cast<float>(_window->GetScreenHeight())}));
     _ballEnemy->Initialize(_window->GetRenderer(), _window->GetSurface());
     _ballEnemy->SetTag("BallEnemy");
 
@@ -207,14 +211,14 @@ void GameController::SpawnPlayers()
     _paddlePlayer->Initialize(_window->GetRenderer(), _window->GetSurface());
     _paddlePlayer->SetTag("PaddlePlayer");
 
-    _paddleEnemy = std::unique_ptr<Paddle>(new Paddle("../resources/paddle1.png", {static_cast<float>(_window->GetScreenWidth() - 50), propHeight}, {0, static_cast<float>(_window->GetScreenHeight())}));
+    _paddleEnemy = std::unique_ptr<Paddle>(new Paddle("../resources/paddle1.png", {static_cast<float>(_window->GetScreenWidth() - 50.f), propHeight}, {0, static_cast<float>(_window->GetScreenHeight())}));
     _paddleEnemy->Initialize(_window->GetRenderer(), _window->GetSurface());
     _paddleEnemy->SetTag("PaddleEnemy");
 
-    _uiDisplay = std::unique_ptr<UIDisplay>(new UIDisplay("../resources/Acme-Regular.ttf", {propWidth, 0}, {propWidth * 2, 45}));
+    _uiDisplay = std::unique_ptr<UIDisplay>(new UIDisplay("../resources/Acme-Regular.ttf", {propWidth, 0}, {propWidth * 2.f, 45.f}));
     _uiDisplay->Initialize(_uiDisplay->GetText(), _window->GetRenderer(), _window->GetSurface(), _uiDisplay->GetColor());
     
-    _background = std::unique_ptr<Background>(new Background("../resources/Background_space.png", {0, 0}, {propWidth * 4, propHeight * 2}));
+    _background = std::unique_ptr<Background>(new Background("../resources/Background_space.png", {0, 0}, {propWidth * 4.f, propHeight * 2.f}));
     _background->Initialize(_window->GetRenderer(), _window->GetSurface());
     _background->SetTag("Background");
 }
@@ -281,8 +285,8 @@ void GameController::CheckCollisions()
  */
 void GameController::SetMenuText()
 {
-    float propWidth = _window->GetScreenWidth() / 3;
-    float propHeight = _window->GetScreenHeight() / 6;
+    float propWidth = static_cast<float>(_window->GetScreenWidth()) / 3.f;
+    float propHeight = static_cast<float>(_window->GetScreenHeight()) / 6.f;
 
     switch (_currentGameState)
     {
@@ -311,8 +315,8 @@ void GameController::SetMenuText()
  */
 void GameController::ResetGame()
 {
-    if (_ballPlayer->GetScore() > _bestScore)
-        Utilities::SaveBestScore(_ballPlayer->GetScore());
+    if (_ballPlayer.get()->GetScore() > _bestScore)
+        Utilities::SaveBestScore(_ballPlayer.get()->GetScore());
     SpawnBlocks();
     _ballPlayer->Reset();
     _ballEnemy->Reset();

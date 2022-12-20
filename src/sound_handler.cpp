@@ -34,6 +34,16 @@ void SoundHandler::Initialize()
 
 SoundHandler::~SoundHandler()
 {
+    if (_backgroundMusic != NULL)
+        Mix_FreeMusic(_backgroundMusic);
+    if (_ball)
+        Mix_FreeChunk(_ball);
+    if (_block)
+        Mix_FreeChunk(_block);
+
+    _backgroundMusic = NULL;
+    _ball = NULL;
+    _block = NULL;
 }
 
 void SoundHandler::PlayMusic()
@@ -55,18 +65,4 @@ void SoundHandler::PlaySoundEffect(Sound_effect soundEffect)
     default:
         break;
     }
-}
-
-void SoundHandler::Clean()
-{
-    if (_backgroundMusic != NULL)
-        Mix_FreeMusic(_backgroundMusic);
-    if (_ball)
-        Mix_FreeChunk(_ball);
-    if (_block)
-        Mix_FreeChunk(_block);
-
-    _backgroundMusic = NULL;
-    _ball = NULL;
-    _block = NULL;
 }

@@ -17,7 +17,7 @@ Window::Window()
     // Initialize values by default
     _screenWidth = SCREEN_WIDTH;
     _screenHeight = SCREEN_HEIGHT;
-    _windowName = "Window";
+    _windowName = "Paddle Game";
 
     _window = NULL;
     _renderer = NULL;

@@ -1,7 +1,7 @@
 #include "block.h"
 #include "logger.h"
 
-Block::Block(/* args */)
+Block::Block()
 {
 }
 

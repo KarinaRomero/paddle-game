@@ -12,7 +12,7 @@
 GameController::GameController()
 {
     // Creates the window
-    _window = new Window();
+    _window = std::make_unique<Window>();
     // Set up all the objects to use SDL
     _isGameInitialized = _window->Initialize();
 
@@ -73,7 +73,6 @@ void GameController::Run()
                 SDL_Delay((int)(DELAY - endTicks));
         }
         Clear();
-        _window->ClearAndQuit();
     }
 }
 

@@ -12,6 +12,7 @@
 #include "utilities.h"
 #include "sound_handler.h"
 #include "background.h"
+#include <memory>
 
 enum Game_State 
 {
@@ -31,7 +32,7 @@ public:
 
 private:
     // Pointer to the window object
-    Window *_window;
+    std::unique_ptr<Window> _window;
     bool _isGameInitialized = false;
 
     // Pointer to the GameObjects for the game

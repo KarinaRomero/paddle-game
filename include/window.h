@@ -25,7 +25,6 @@ public:
     void ClearRender();
     void UpdateRender();
     int Input();
-    void ClearAndQuit();
     int GetScreenWidth() { return _screenWidth; };
     int GetScreenHeight() { return _screenHeight; };
     

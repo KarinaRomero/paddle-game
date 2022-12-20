@@ -153,7 +153,7 @@ int Window::Input()
 /**
  * Free all the resources and Quit mixer, ttf, image and SDL
  */
-void Window::ClearAndQuit()
+Window::~Window()
 {
     SDL_FreeSurface(_surface);
     SDL_DestroyRenderer(_renderer);

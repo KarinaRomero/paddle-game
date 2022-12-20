@@ -3,6 +3,8 @@
 #include "block.h"
 #include "paddle.h"
 
+#include <bits/stdc++.h>
+
 Ball::Ball()
 {
     Logger::LogLibrary("Ball::Ball", "Default");
@@ -35,7 +37,7 @@ void Ball::Update()
     {
         _velocity.x *= -1;
         _faults++;
-        _score -= _faultValue;
+        _score = std::clamp(_score - _faultValue, 0, _score - _faultValue);
     }
     if (_position.y >= _moveLimitsMax.y || _position.y <= _moveLimitsMin.y)
     {
@@ -65,8 +67,8 @@ void Ball::CollisionDetected(GameObject *other)
         if (other->GetTag().find("Block") != std::string::npos)
         {
             Block* block = dynamic_cast<Block*>(other);
-            _score+= block->GetPoints();
+            _score = std::clamp(_score + block->GetPoints(), 0, _score + block->GetPoints());
+            delete block;
         }
-        //Logger::LogLibrary("Ball::CollisionDetected ME: " + _tag, " Other: " + other->GetTag());
     }
 }

@@ -33,13 +33,17 @@ sudo apt-get install libsdl2-mixer-dev
 
 ## How to compile?
 
-This project can be compiled whit cmake If it is not installed on your PC, follow the instructions in this **[link](https://vitux.com/how-to-install-cmake-on-ubuntu/)**.
+This project can be compiled whit cmake If it is not installed on your PC, follow the instructions in this **[link](https://vitux.com/how-to-install-cmake-on-ubuntu/)**, or if you are using ubuntu, you can simply install by command line using:
+
+```
+sudo apt-get install cmake
+```
 
 Once cmake is installed, open the terminal in the root folder of the project and run the following commands in the next order:
 
 ```
 mkdir build && cd build
-cmake..
+cmake ..
 make
 ./PaddleGame
 ```
